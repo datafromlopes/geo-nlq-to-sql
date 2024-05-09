@@ -3,6 +3,21 @@ from scipy.spatial import distance
 from scipy.special import kl_div
 from scipy.stats import pearsonr
 import numpy as np
+import torch
+
+
+class MakeTorchData(torch.utils.data.Dataset):
+    def __init__(self, encodings, labels):
+        self.encodings = encodings
+        self.labels = labels
+
+    def __getitem__(self, idx):
+        item = {k: torch.tensor(v[idx]) for k, v in self.encodings.items()}
+        item["labels"] = float(self.labels[idx])
+        return item
+
+    def __len__(self):
+        return len(self.labels)
 
 
 class Metrics:

@@ -1,33 +1,32 @@
 from models.text_models import TextToSql
 import pandas as pd
+from sklearn.model_selection import train_test_split
+from torch.utils.data import Dataset
+from sklearn.preprocessing import LabelEncoder
+from utils.utils import MakeTorchData
 
-DATA_SOURCE_FOLDER = "/Users/diegolopes/Repositories/texttosql/data"
 
-train_dataset = pd.read_csv(f"{DATA_SOURCE_FOLDER}/training_data.csv")
-validation_dataset = pd.read_csv(f"{DATA_SOURCE_FOLDER}/validation_data.csv")
-test_dataset = pd.read_csv(f"{DATA_SOURCE_FOLDER}/test_data.csv")
-
-x_train = train_dataset['question'].values
-y_train = train_dataset['query'].values
-
-x_test = test_dataset['question'].values
-y_test = test_dataset['query'].values
-
-x_validation = validation_dataset['question'].values
-y_validation = validation_dataset['query'].values
-
-MAX_SEQUENCE_LENGTH = 500
-MAX_FEATURES = len(x_train)
+DATASET = "/Users/diegolopes/Repositories/ms-usp-text-to-sql/data/spider_dataset.csv"
 MODEL_BASE = "bert-base-cased"
-DEVICE = "mps"
+DEVICE = "cpu"
+
+df = pd.read_csv(DATASET)
+df.dropna(inplace=True)
+
+label_encoder = LabelEncoder()
+encoded_labels = label_encoder.fit_transform(df['query'])
+
+X_train, X_test, y_train, y_test = train_test_split(df['question'], encoded_labels, test_size=0.4, random_state=42)
 
 text_to_sql = TextToSql(model_name=MODEL_BASE, device=DEVICE)
 
-encoder_train = text_to_sql.encode(text=x_train, max_length=MAX_SEQUENCE_LENGTH)
-encoder_test = text_to_sql.encode(text=x_test, max_length=MAX_SEQUENCE_LENGTH)
-encoder_validation = text_to_sql.encode(text=x_validation, max_length=MAX_SEQUENCE_LENGTH)
+train_tokenized = text_to_sql.tokenize(texts=X_train)
+test_tokenized = text_to_sql.tokenize(texts=X_test)
 
-trainer = text_to_sql(train_dataset=encoder_train, valid_dataset=encoder_validation)
+train_dataset = MakeTorchData(train_tokenized, y_train.ravel())
+valid_dataset = MakeTorchData(test_tokenized, y_test.ravel())
+
+trainer = text_to_sql.trainer(train_dataset=train_dataset, test_dataset=valid_dataset)
 
 trainer.train()
 trainer.evaluate()
