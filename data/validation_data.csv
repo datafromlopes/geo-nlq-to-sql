@@ -1,0 +1,757 @@
+question,query
+What is the average prices of wines for each each?,"SELECT avg(Price) ,  YEAR FROM WINE GROUP BY YEAR"
+Show the account id with most number of transactions.,SELECT account_id FROM Financial_transactions GROUP BY account_id ORDER BY count(*) DESC LIMIT 1
+"Please show the songs that have result ""nominated"" at music festivals.","SELECT T2.Song FROM music_festival AS T1 JOIN volume AS T2 ON T1.Volume  =  T2.Volume_ID WHERE T1.Result  =  ""Nominated"""
+Find the checking balance and saving balance in the Brown’s account.,"SELECT T2.balance ,  T3.balance FROM accounts AS T1 JOIN checking AS T2 ON T1.custid  =  T2.custid JOIN savings AS T3 ON T1.custid  =  T3.custid WHERE T1.name  =  'Brown'"
+What are the first and last names for all customers?,"SELECT first_name ,  last_name FROM Customers;"
+What are the maximum and minumum grade points?,"SELECT max(gradepoint) ,  min(gradepoint) FROM GRADECONVERSION"
+"For each file format, return the number of artists who released songs in that format.","SELECT count(*) ,  formats FROM files GROUP BY formats"
+Who were the governors of the parties associated with delegates from district 1?,SELECT T2.Governor FROM election AS T1 JOIN party AS T2 ON T1.Party  =  T2.Party_ID WHERE T1.District  =  1
+Which address do not have any member with the black membership card?,SELECT address FROM member EXCEPT SELECT address FROM member WHERE Membership_card  =  'Black'
+Show all the buildings that have at least 10 professors.,"SELECT building FROM Faculty WHERE rank  =  ""Professor"" GROUP BY building HAVING count(*)  >=  10"
+How many lesson does customer with first name Ray took?,"SELECT count(*) FROM Lessons AS T1 JOIN Customers AS T2 ON T1.customer_id  = T2.customer_id WHERE T2.first_name = ""Ray"""
+What is the name of the track that has had the greatest number of races?,SELECT T2.name FROM race AS T1 JOIN track AS T2 ON T1.track_id  =  T2.track_id GROUP BY T1.track_id ORDER BY count(*) DESC LIMIT 1
+which states does the longest river run through,SELECT traverse FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river );
+List the ids of all distinct orders ordered by placed date.,SELECT DISTINCT order_id FROM orders ORDER BY date_order_placed
+List all the cities in a decreasing order of each city's stations' highest latitude.,SELECT city FROM station GROUP BY city ORDER BY max(lat) DESC
+"What are the phone, room, and building of the faculty member called Jerry Prince?","SELECT phone ,  room ,  building FROM Faculty WHERE Fname  =  ""Jerry"" AND Lname  =  ""Prince"""
+"Find the phone number of performer ""Ashley"".","SELECT Customer_Phone FROM PERFORMERS WHERE Customer_Name  =  ""Ashley"""
+Give the title and credits for the course that is taught in the classroom with the greatest capacity.,"SELECT T3.title ,  T3.credits FROM classroom AS T1 JOIN SECTION AS T2 ON T1.building  =  T2.building AND T1.room_number  =  T2.room_number JOIN course AS T3 ON T2.course_id  =  T3.course_id WHERE T1.capacity  =  (SELECT max(capacity) FROM classroom)"
+What is the last name of the student who received an A in the class with the code 10018?,SELECT T1.stu_lname FROM student AS T1 JOIN enroll AS T2 ON T1.stu_num  =  T2.stu_num WHERE T2.enroll_grade  =  'A' AND T2.class_code  =  10018
+which is the smallest state,SELECT state_name FROM state WHERE area  =  ( SELECT MIN ( area ) FROM state );
+What are the different locations of the school with the code BUS?,SELECT count(DISTINCT dept_address) FROM department WHERE school_code  =  'BUS'
+What is the average price for wines not produced in Sonoma county?,SELECT avg(price) FROM wine WHERE Appelation NOT IN (SELECT T1.Appelation FROM APPELLATIONS AS T1 JOIN WINE AS T2 ON T1.Appelation  =  T2.Appelation WHERE T1.County  =  'Sonoma')
+What is the description for the results whose project detail is 'sint'?,SELECT T1.outcome_description FROM Research_outcomes AS T1 JOIN Project_outcomes AS T2 ON T1.outcome_code  =  T2.outcome_code JOIN Projects AS T3 ON T2.project_id  =  T3.project_id WHERE T3.project_details  =  'sint'
+"Find all information about student addresses, and sort by monthly rental in descending order.",SELECT * FROM Student_Addresses ORDER BY monthly_rental DESC
+Find the list of cities that no customer is living in.,SELECT city FROM addresses WHERE city NOT IN ( SELECT DISTINCT t3.city FROM customers AS t1 JOIN customer_addresses AS t2 ON t1.customer_id  =  t2.customer_id JOIN addresses AS t3 ON t2.address_id  =  t3.address_id)
+Which university is in Los Angeles county and opened after 1950?,"SELECT campus FROM campuses WHERE county  =  ""Los Angeles"" AND YEAR  >  1950"
+How many airports haven't the pilot 'Thompson' driven an aircraft?,SELECT count(*) FROM airport WHERE id NOT IN ( SELECT airport_id FROM flight WHERE pilot  =  'Thompson' );
+Return the name of the party with the most members.,SELECT T2.party_name FROM Member AS T1 JOIN party AS T2 ON T1.party_id  =  T2.party_id GROUP BY T1.party_id ORDER BY count(*) DESC LIMIT 1
+How many girl students who are younger than 25?,SELECT count(*) FROM student WHERE sex  =  'F' AND age  <  25
+"What are the ids, names and genders of the architects who built two bridges or one mill?","SELECT T1.id ,  T1.name ,  T1.gender FROM architect AS T1 JOIN bridge AS T2 ON T1.id  =  T2.architect_id GROUP BY T1.id HAVING count(*)  =  2 UNION SELECT T1.id ,  T1.name ,  T1.gender FROM architect AS T1 JOIN mill AS T2 ON T1.id  =  T2.architect_id GROUP BY T1.id HAVING count(*)  =  1"
+What is the language used most often in the songs?,SELECT languages FROM song GROUP BY languages ORDER BY count(*) DESC LIMIT 1
+What are the names of storms that did not affect any regions?,SELECT name FROM storm WHERE storm_id NOT IN (SELECT storm_id FROM affected_region)
+"What is the category and typical buying price  of the product with name ""cumin""?","SELECT product_category_code ,  typical_buying_price FROM products WHERE product_name  =  ""cumin"""
+Show the distinct countries of managers.,SELECT DISTINCT Country FROM manager
+What are all locations of train stations?,SELECT DISTINCT LOCATION FROM station
+Show the account id and the number of transactions for each account,"SELECT account_id ,  count(*) FROM Financial_transactions GROUP BY account_id"
+What are the ids and locations of all circuits in France or Belgium?,"SELECT circuitid ,  LOCATION FROM circuits WHERE country = ""France"" OR country = ""Belgium"""
+What are the names of all directors who made one movie?,SELECT director FROM Movie GROUP BY director HAVING count(*)  =  1
+"What is the zip code the county named ""Howard"" is located in?","SELECT Zip_code FROM county WHERE County_name  =  ""Howard"""
+What is the receipt date of the document with id 3?,SELECT receipt_date FROM Documents WHERE document_id = 3;
+What are the details and id of the project with the most outcomes?,"SELECT T1.project_details ,  T1.project_id FROM Projects AS T1 JOIN Project_outcomes AS T2 ON T1.project_id  =  T2.project_id GROUP BY T1.project_id ORDER BY count(*) DESC LIMIT 1"
+Find the average height and weight for all males (sex is M).,"SELECT avg(height) ,  avg(weight) FROM people WHERE sex  =  'M'"
+what is the longest river in the largest state,SELECT river_name FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river WHERE traverse IN ( SELECT state_name FROM state WHERE area  =  ( SELECT MAX ( area ) FROM state ) ) ) AND traverse IN ( SELECT state_name FROM state WHERE area  =  ( SELECT MAX ( area ) FROM state ) );
+Show the names of buildings except for those having an institution founded in 2003.,SELECT name FROM building EXCEPT SELECT T1.name FROM building AS T1 JOIN institution AS T2 ON T1.building_id  =  T2.building_id WHERE T2.founded  =  2003
+"Show the names of aircrafts that are associated with both an airport named ""London Heathrow"" and an airport named ""London Gatwick""","SELECT T1.Aircraft FROM aircraft AS T1 JOIN airport_aircraft AS T2 ON T1.Aircraft_ID  =  T2.Aircraft_ID JOIN airport AS T3 ON T2.Airport_ID  =  T3.Airport_ID WHERE T3.Airport_Name  =  ""London Heathrow"" INTERSECT SELECT T1.Aircraft FROM aircraft AS T1 JOIN airport_aircraft AS T2 ON T1.Aircraft_ID  =  T2.Aircraft_ID JOIN airport AS T3 ON T2.Airport_ID  =  T3.Airport_ID WHERE T3.Airport_Name  =  ""London Gatwick"""
+show me all the major lakes in the us,SELECT lake_name FROM lake WHERE area  >  750;
+What are the states with colleges that have enrollments less than the some other college?,SELECT DISTINCT state FROM college WHERE enr  <  (SELECT max(enr) FROM college)
+What is the company where Eduardo Martins is a customer?,"SELECT company FROM customers WHERE first_name = ""Eduardo"" AND last_name = ""Martins"";"
+where is massachusetts,"SELECT country_name FROM state WHERE state_name  =  ""massachusetts"";"
+"What is the total budget amount for school ""Glenn"" in all years?",SELECT sum(T1.budgeted) FROM budget AS T1 JOIN school AS T2 ON T1.school_id  =  T2.school_id WHERE T2.school_name  =  'Glenn'
+What is minimum age for different job title?,"SELECT min(age) ,  job FROM Person GROUP BY job"
+"Show name, opening year, and capacity for each cinema.","SELECT name ,  openning_year ,  capacity FROM cinema"
+Which students have professors as their advisors? Find their student ids.,"SELECT T2.StuID FROM Faculty AS T1 JOIN Student AS T2 ON T1.FacID  =  T2.advisor WHERE T1.rank  =  ""Professor"""
+"Show minimum, maximum, and average market value for all companies.","SELECT min(market_value) ,  max(market_value) ,  avg(market_value) FROM company"
+What are the statuses and average populations of each city?,"SELECT Status ,  avg(Population) FROM city GROUP BY Status"
+Find the average credit score of the customers who have some loan.,SELECT avg(credit_score) FROM customer WHERE cust_id IN (SELECT cust_id FROM loan)
+Find the number of records of each policy type and its type code.,"SELECT policy_type_code ,  count(*) FROM policies GROUP BY policy_type_code"
+What are the full names of the 3 instructors who teach the most courses?,"SELECT T2.Fname ,  T2.Lname FROM COURSE AS T1 JOIN FACULTY AS T2 ON T1.Instructor  =  T2.FacID GROUP BY T1.Instructor ORDER BY count(*) DESC LIMIT 3"
+What are the different instruments listed in the database?,SELECT DISTINCT instrument FROM Instruments
+How many different professors are there for the different schools?,"SELECT count(*) ,  T1.school_code FROM department AS T1 JOIN professor AS T2 ON T1.dept_code  =  T2.dept_code GROUP BY T1.school_code"
+Show all student ids and the number of hours played.,"SELECT Stuid ,  sum(hours_played) FROM Plays_games GROUP BY Stuid"
+What is the code of each location and the number of documents in that location?,"SELECT location_code ,  count(*) FROM Document_locations GROUP BY location_code"
+Which projects have no outcome? List the project details.,SELECT project_details FROM Projects WHERE project_id NOT IN ( SELECT project_id FROM Project_outcomes )
+Find the average price of wines that are not produced from Sonoma county.,SELECT avg(price) FROM wine WHERE Appelation NOT IN (SELECT T1.Appelation FROM APPELLATIONS AS T1 JOIN WINE AS T2 ON T1.Appelation  =  T2.Appelation WHERE T1.County  =  'Sonoma')
+How many documents have expenses?,SELECT count(*) FROM Documents_with_expenses
+Return the type of transaction with the highest total amount.,SELECT transaction_type FROM Financial_transactions GROUP BY transaction_type ORDER BY sum(transaction_amount) DESC LIMIT 1
+Count the number of different companies.,SELECT count(DISTINCT Company) FROM entrepreneur
+What is the average and maximum damage in millions for storms that had a max speed over 1000?,"SELECT avg(damage_millions_USD) ,  max(damage_millions_USD) FROM storm WHERE max_speed  >  1000"
+What are the first names of all professors who teach more than one class?,SELECT T2.emp_fname FROM CLASS AS T1 JOIN employee AS T2 ON T1.prof_num  =  T2.emp_num GROUP BY T1.prof_num HAVING count(*)  >  1
+list names of all departments ordered by their names.,SELECT dept_name FROM department ORDER BY dept_name
+Find the name and email of the user whose name contains the word ‘Swift’.,"SELECT name ,  email FROM user_profiles WHERE name LIKE '%Swift%'"
+How many documents can one grant have at most? List the grant id and number.,"SELECT grant_id ,  count(*) FROM Documents GROUP BY grant_id ORDER BY count(*) DESC LIMIT 1"
+What are the names of customers who live in Colorado state?,"SELECT t1.customer_name FROM customers AS t1 JOIN customer_addresses AS t2 ON t1.customer_id  =  t2.customer_id JOIN addresses AS t3 ON t2.address_id  =  t3.address_id WHERE t3.state_province_county  =  ""Colorado"""
+What are the full names and gradepoints for all enrollments?,"SELECT T3.Fname ,  T3.LName ,  T2.gradepoint FROM ENROLLED_IN AS T1 JOIN GRADECONVERSION AS T2 JOIN STUDENT AS T3 ON T1.Grade  =  T2.lettergrade AND T1.StuID  =  T3.StuID"
+What are the id of problems reported by the staff named Dameon Frami or Jolie Weber?,"SELECT product_id FROM problems AS T1 JOIN staff AS T2 ON T1.reported_by_staff_id = T2.staff_id WHERE T2.staff_first_name = ""Dameon"" AND T2.staff_last_name = ""Frami"" UNION SELECT product_id FROM problems AS T1 JOIN staff AS T2 ON T1.reported_by_staff_id = T2.staff_id WHERE T2.staff_first_name = ""Jolie"" AND T2.staff_last_name = ""Weber"""
+What is the membership card held by both members living in Hartford and ones living in Waterbury address?,SELECT membership_card FROM member WHERE address  =  'Hartford' INTERSECT SELECT membership_card FROM member WHERE address  =  'Waterbury'
+Which organizations are not a parent organization of others? List the organization id.,SELECT organization_id FROM organizations EXCEPT SELECT parent_organization_id FROM organizations
+How many distinct students have been in detention?,SELECT count(DISTINCT student_id) FROM Students_in_Detention
+Return the code of the document type that is most common.,SELECT document_type_code FROM Documents GROUP BY document_type_code ORDER BY count(*) DESC LIMIT 1
+"What are the dates of the orders made by the customer named ""Jeramie""?","SELECT T2.date_order_placed FROM customers AS T1 JOIN orders AS T2 ON T1.customer_id = T2.customer_id WHERE T1.customer_name = ""Jeramie"""
+What are the ids and trade names of the medicine that can interact with at least 3 enzymes?,"SELECT T1.id ,  T1.trade_name FROM medicine AS T1 JOIN medicine_enzyme_interaction AS T2 ON T2.medicine_id  =  T1.id GROUP BY T1.id HAVING COUNT(*)  >=  3"
+What are the names and arrival times of trains?,"SELECT Name ,  Arrival FROM train"
+Which course authors teach two or more courses? Give me their addresses and author IDs.,"SELECT T1.address_line_1 ,  T2.author_id FROM Course_Authors_and_Tutors AS T1 JOIN Courses AS T2 ON T1.author_id  =  T2.author_id GROUP BY T2.author_id HAVING Count(*)  >=  2"
+how many cities are there in the us,SELECT COUNT ( city_name ) FROM city;
+"Show the minimum, average, maximum order quantity of all invoices.","SELECT min(Order_Quantity) ,  avg(Order_Quantity) ,  max(Order_Quantity) FROM INVOICES"
+what is the lowest point in iowa in meters,"SELECT lowest_point FROM highlow WHERE state_name  =  ""iowa"";"
+List the description of all the colors.,SELECT color_description FROM ref_colors
+"For each fourth-grade classroom, show the classroom number and the total number of students using it.","SELECT classroom ,  count(*) FROM list WHERE grade  =  ""4"" GROUP BY classroom"
+Find the name of the most expensive hardware product.,SELECT product_name FROM products WHERE product_type_code  =  'Hardware' ORDER BY product_price DESC LIMIT 1
+"What is the location of the club named ""Tennis Club""?","SELECT clublocation FROM club WHERE clubname  =  ""Tennis Club"""
+which pilot is in charge of the most number of flights?,SELECT pilot FROM flight GROUP BY pilot ORDER BY count(*) DESC LIMIT 1
+Who were the comptrollers of the parties associated with the delegates from district 1 or district 2?,SELECT T2.Comptroller FROM election AS T1 JOIN party AS T2 ON T1.Party  =  T2.Party_ID WHERE T1.District  =  1 OR T1.District  =  2
+What are the ids of all the employees who authorize document destruction?,SELECT DISTINCT Destruction_Authorised_by_Employee_ID FROM Documents_to_be_destroyed
+What are the first and last names of the instructors who teach the top 3 number of courses?,"SELECT T2.Fname ,  T2.Lname FROM COURSE AS T1 JOIN FACULTY AS T2 ON T1.Instructor  =  T2.FacID GROUP BY T1.Instructor ORDER BY count(*) DESC LIMIT 3"
+"Find the names of the clubs that have at least a member from the city with city code ""HOU"".","SELECT DISTINCT t1.clubname FROM club AS t1 JOIN member_of_club AS t2 ON t1.clubid  =  t2.clubid JOIN student AS t3 ON t2.stuid  =  t3.stuid WHERE t3.city_code  =  ""HOU"""
+How many different types of rooms are there?,SELECT count(DISTINCT roomtype) FROM room
+What is the total count of enzymes?,SELECT count(*) FROM enzyme
+What are the first and last names of people who payed more than the rooms' base prices?,"SELECT T1.firstname ,  T1.lastname FROM Reservations AS T1 JOIN Rooms AS T2 ON T1.Room  =  T2.RoomId WHERE T1.Rate - T2.basePrice  >  0"
+What is the author of the submission with the highest score?,SELECT Author FROM submission ORDER BY Scores DESC LIMIT 1
+Show all train names and times in stations in London in descending order by train time.,"SELECT T3.name ,  T3.time FROM train_station AS T1 JOIN station AS T2 ON T1.station_id  =  T2.station_id JOIN train AS T3 ON T3.train_id  =  T1.train_id WHERE T2.location  =  'London' ORDER BY T3.time DESC"
+What is the theme and artist name for the exhibition with a ticket price higher than the average?,"SELECT T1.theme ,  T2.name FROM exhibition AS T1 JOIN artist AS T2 ON T1.artist_id  =  T2.artist_id WHERE T1.ticket_price  >  (SELECT avg(ticket_price) FROM exhibition)"
+What is the average price of clothes?,SELECT avg(product_price) FROM products WHERE product_type_code  =  'Clothes'
+"Find the description of the club ""Pen and Paper Gaming"".","SELECT clubdesc FROM club WHERE clubname  =  ""Pen and Paper Gaming"""
+Find the name of the most popular party form.,SELECT t1.form_name FROM forms AS t1 JOIN party_forms AS t2 ON t1.form_id  =  t2.form_id GROUP BY t2.form_id ORDER BY count(*) DESC LIMIT 1
+Show the minister who took office after 1961 or before 1959.,SELECT minister FROM party WHERE took_office  >  1961 OR took_office  <  1959
+Find the names of all physicians and their primary affiliated departments' names.,"SELECT T1.name ,  T3.name FROM physician AS T1 JOIN affiliated_with AS T2 ON T1.EmployeeID  =  T2.physician JOIN department AS T3 ON T2.department  =  T3.DepartmentID WHERE T2.PrimaryAffiliation  =  1"
+Which poll resource provided the most number of candidate information?,SELECT poll_source FROM candidate GROUP BY poll_source ORDER BY count(*) DESC LIMIT 1
+What is the average cost of procedures that physician John Wen was trained in?,"SELECT avg(T3.cost) FROM physician AS T1 JOIN trained_in AS T2 ON T1.employeeid  =  T2.physician JOIN procedures AS T3 ON T3.code  =  T2.treatment WHERE T1.name  =  ""John Wen"""
+Show the location with most number of train stations.,SELECT LOCATION FROM station GROUP BY LOCATION ORDER BY count(*) DESC LIMIT 1
+What are the ids and durations of the trips with the top 3 durations?,"SELECT id ,  duration FROM trip ORDER BY duration DESC LIMIT 3"
+How many documents do not have any expense?,SELECT count(*) FROM Documents WHERE document_id NOT IN ( SELECT document_id FROM Documents_with_expenses )
+What are the names of the physician who prescribed the highest dose?,SELECT T1.name FROM physician AS T1 JOIN prescribes AS T2 ON T1.employeeid = T2.physician ORDER BY T2.dose DESC LIMIT 1
+through which states does the ohio flow,"SELECT traverse FROM river WHERE river_name  =  ""ohio"";"
+What are the names and trade names of the medcines that are FDA approved?,"SELECT name ,  trade_name FROM medicine WHERE FDA_approved  =  'Yes'"
+Show the price ranges of hotels with 5 star ratings.,"SELECT price_range FROM HOTELS WHERE star_rating_code  =  ""5"""
+"Which papers have ""Stephanie Weirich"" as an author?","SELECT t3.title FROM authors AS t1 JOIN authorship AS t2 ON t1.authid  =  t2.authid JOIN papers AS t3 ON t2.paperid  =  t3.paperid WHERE t1.fname  =  ""Stephanie"" AND t1.lname  =  ""Weirich"""
+"Group by ships by flag, and return number of ships that have each flag.","SELECT count(*) ,  flag FROM ship GROUP BY flag"
+"List the duration, file size and format of songs whose genre is pop, ordered by title?","SELECT T1.duration ,  T1.file_size ,  T1.formats FROM files AS T1 JOIN song AS T2 ON T1.f_id  =  T2.f_id WHERE T2.genre_is  =  ""pop"" ORDER BY T2.song_name"
+Show the name and distance of the aircrafts with more than 5000 distance and which at least 5 people have its certificate.,SELECT T2.name FROM Certificate AS T1 JOIN Aircraft AS T2 ON T2.aid  =  T1.aid WHERE T2.distance  >  5000 GROUP BY T1.aid ORDER BY count(*)  >=  5
+How many rooms does each block floor have?,"SELECT count(*) ,  T1.blockfloor FROM BLOCK AS T1 JOIN room AS T2 ON T1.blockfloor  =  T2.blockfloor AND T1.blockcode  =  T2.blockcode GROUP BY T1.blockfloor"
+List the campus that have between 600 and 1000 faculty lines in year 2004.,SELECT T1.campus FROM campuses AS t1 JOIN faculty AS t2 ON t1.id  =  t2.campus WHERE t2.faculty  >=  600 AND t2.faculty  <=  1000 AND T1.year  =  2004
+Find the salary and manager number for those employees who is working under a manager.,"SELECT salary ,  manager_id FROM employees WHERE manager_id != ""null"""
+Find the names of the top 10 airlines that operate the most number of routes.,"SELECT T1.name ,  T2.alid FROM airlines AS T1 JOIN routes AS T2 ON T1.alid  =  T2.alid GROUP BY T2.alid ORDER BY count(*) DESC LIMIT 10"
+What are all the details of the organisations described as 'Sponsor'? Sort the result in an ascending order.,SELECT organisation_details FROM Organisations AS T1 JOIN organisation_Types AS T2 ON T1.organisation_type  =  T2.organisation_type WHERE T2.organisation_type_description  =  'Sponsor' ORDER BY organisation_details
+Return the names of singers who are from UK and released an English song.,"SELECT artist_name FROM artist WHERE country  =  ""UK"" INTERSECT SELECT T1.artist_name FROM artist AS T1 JOIN song AS T2 ON T1.artist_name  =  T2.artist_name WHERE T2.languages  =  ""english"""
+what states does the ohio run through,"SELECT traverse FROM river WHERE river_name  =  ""ohio"";"
+Please show the employee last names that serves no more than 20 customers.,SELECT T1.LastName FROM CUSTOMER AS T1 JOIN EMPLOYEE AS T2 ON T1.SupportRepId  =  T2.EmployeeId GROUP BY T1.SupportRepId HAVING COUNT(*)  <=  20
+Show the nicknames of schools that are not in division 1.,"SELECT Nickname FROM school_details WHERE Division != ""Division 1"""
+"What are the names, locations, and years of opening for tracks with seating higher than average?","SELECT name ,  LOCATION ,  year_opened FROM track WHERE seating  >  (SELECT avg(seating) FROM track)"
+How many different types of beds are there?,SELECT count(DISTINCT bedType) FROM Rooms;
+What are the birthdays of people in ascending order of height?,SELECT Birth_Date FROM People ORDER BY Height ASC
+How many allergies are there?,SELECT count(DISTINCT allergy) FROM Allergy_type
+How many video games do you have?,SELECT count(*) FROM Video_games
+what states have a city named springfield,"SELECT state_name FROM city WHERE city_name  =  ""springfield"";"
+List the names of all distinct wines ordered by price.,SELECT DISTINCT Name FROM WINE ORDER BY price
+"What are the account ids, customer ids, and account names for all the accounts?","SELECT account_id ,  customer_id ,  account_name FROM Accounts"
+Find the name of tracks which are in Movies playlist but not in music playlist.,SELECT T1.name FROM tracks AS T1 JOIN playlist_tracks AS T2 ON T1.id  =  T2.track_id JOIN playlists AS T3 ON T2.playlist_id  =  T3.id WHERE T3.name  =  'Movies' EXCEPT SELECT T1.name FROM tracks AS T1 JOIN playlist_tracks AS T2 ON T1.id  =  T2.track_id JOIN playlists AS T3 ON T2.playlist_id  =  T3.id WHERE T3.name  =  'Music'
+What is the description for the CIS-220 and how many credits does it have?,"SELECT crs_credit ,  crs_description FROM course WHERE crs_code  =  'CIS-220'"
+what is the height of the highest mountain in texas,"SELECT MAX ( DISTINCT highest_elevation ) FROM highlow WHERE state_name  =  ""texas"";"
+What is the average height of the players from the college named 'Yale University'?,SELECT avg(T1.height) FROM player AS T1 JOIN player_college AS T2 ON T1.player_id  =  T2.player_id JOIN college AS T3 ON T3.college_id  =  T2.college_id WHERE T3.name_full  =  'Yale University';
+"What are the ids of the problems that are from the product ""voluptatem"" and are reported after 1995?","SELECT T1.problem_id FROM problems AS T1 JOIN product AS T2 ON T1.product_id = T2.product_id WHERE T2.product_name = ""voluptatem"" AND T1.date_problem_reported > ""1995"""
+Show the most common location of performances.,SELECT LOCATION FROM performance GROUP BY LOCATION ORDER BY COUNT(*) DESC LIMIT 1
+Show the authors who have submissions to more than one workshop.,SELECT T2.Author FROM acceptance AS T1 JOIN submission AS T2 ON T1.Submission_ID  =  T2.Submission_ID GROUP BY T2.Author HAVING COUNT(DISTINCT T1.workshop_id)  >  1
+"Find the start and end dates of detentions of teachers with last name ""Schultz"".","SELECT T1.datetime_detention_start ,  datetime_detention_end FROM Detention AS T1 JOIN Teachers AS T2 ON T1.teacher_id  =  T2.teacher_id WHERE T2.last_name  =  ""Schultz"""
+"What are the song titles on the album ""A Kiss Before You Go: Live in Hamburg""?","SELECT T3.title FROM albums AS T1 JOIN tracklists AS T2 ON T1.aid  =  T2.albumid JOIN songs AS T3 ON T2.songid  =  T3.songid WHERE T1.title  =  ""A Kiss Before You Go: Live in Hamburg"""
+Find the average number of bedrooms of all the apartments.,SELECT avg(bedroom_count) FROM Apartments
+Which program was launched most recently? Return the program name.,SELECT name FROM program ORDER BY launch DESC LIMIT 1
+What are the member names and hometowns of those who registered at a branch in 2016?,"SELECT T2.name ,  T2.hometown FROM membership_register_branch AS T1 JOIN member AS T2 ON T1.member_id  =  T2.member_id WHERE T1.register_year  =  2016"
+Give me the name of each club.,SELECT clubname FROM club
+How many students live in HKG or CHI?,"SELECT count(*) FROM Student WHERE city_code  =  ""HKG"" OR city_code  =  ""CHI"""
+What are the names of the storms that affected both the regions of Afghanistan and Albania?,SELECT T3.Name FROM affected_region AS T1 JOIN region AS T2 ON T1.region_id  =  T2.region_id JOIN storm AS T3 ON T1.storm_id  =  T3.storm_id WHERE T2.Region_name  =  'Afghanistan' INTERSECT SELECT T3.Name FROM affected_region AS T1 JOIN region AS T2 ON T1.region_id  =  T2.region_id JOIN storm AS T3 ON T1.storm_id  =  T3.storm_id WHERE T2.Region_name  =  'Albania'
+Count the number of rooms in Lamberton with capacity lower than 50.,SELECT count(*) FROM classroom WHERE building  =  'Lamberton' AND capacity  <  50
+List the names of gymnasts in ascending order by their heights.,SELECT T2.Name FROM gymnast AS T1 JOIN people AS T2 ON T1.Gymnast_ID  =  T2.People_ID ORDER BY T2.Height ASC
+What is the average quantity of stocks?,SELECT avg(Quantity) FROM stock
+What are the product ids and color descriptions for products with two or more characteristics?,"SELECT t1.product_id ,  t2.color_description FROM products AS t1 JOIN ref_colors AS t2 ON t1.color_code  =  t2.color_code JOIN product_characteristics AS t3 ON t1.product_id  =  t3.product_id GROUP BY t1.product_id HAVING count(*)  >=  2"
+What are the ids of all stations that have a latitude above 37.4 and have never had less than 7 bikes available?,SELECT id FROM station WHERE lat  >  37.4 EXCEPT SELECT station_id FROM status GROUP BY station_id HAVING min(bikes_available)  <  7
+"Show the names of members whose country is ""United States"" or ""Canada"".","SELECT Name FROM member WHERE Country  =  ""United States"" OR Country  =  ""Canada"""
+How many rooms have king beds? Report the number for each decor type.,"SELECT decor ,  count(*) FROM Rooms WHERE bedType = ""King"" GROUP BY decor;"
+What are the names and ids of documents that have the type code BK?,"SELECT document_name ,  document_id FROM Documents WHERE document_type_code  =  ""BK"""
+What are the ids for all sporty students who are on scholarship?,SELECT StuID FROM Sportsinfo WHERE onscholarship  =  'Y'
+Show the locations that have more than one railways.,SELECT LOCATION FROM railway GROUP BY LOCATION HAVING COUNT(*)  >  1
+Give the different positions of players who play for the country with the capital Dublin.,"SELECT DISTINCT T2.Position FROM country AS T1 JOIN match_season AS T2 ON T1.Country_id  =  T2.Country WHERE T1.Capital  =  ""Dublin"""
+Count the number of products in the category 'Seeds'.,"SELECT count(*) FROM products WHERE product_category_code  =  ""Seeds"""
+List the names of counties in descending order of population.,SELECT Name FROM county_public_safety ORDER BY Population DESC
+What are the names of teams from universities that have a below average enrollment?,SELECT t2.team_name FROM university AS t1 JOIN basketball_match AS t2 ON t1.school_id  =  t2.school_id WHERE enrollment  <  (SELECT avg(enrollment) FROM university)
+What are the names of the districts that have both mall and village store style shops?,"SELECT t3.District_name FROM store AS t1 JOIN store_district AS t2 ON t1.store_id  =  t2.store_id JOIN district AS t3 ON t2.district_id  =  t3.district_id WHERE t1.Type  =  ""City Mall"" INTERSECT SELECT t3.District_name FROM store AS t1 JOIN store_district AS t2 ON t1.store_id  =  t2.store_id JOIN district AS t3 ON t2.district_id  =  t3.district_id WHERE t1.Type  =  ""Village Store"""
+"What is the id, name and nationality of the architect who built most mills?","SELECT T1.id ,  T1.name ,  T1.nationality FROM architect AS T1 JOIN mill AS T2 ON T1.id  =  T2.architect_id GROUP BY T1.id ORDER BY count(*) DESC LIMIT 1"
+What are the details of the shops that can be accessed by walk?,"SELECT T1.Shop_Details FROM SHOPS AS T1 JOIN TOURIST_ATTRACTIONS AS T2 ON T1.Shop_ID  =  T2.Tourist_Attraction_ID WHERE T2.How_to_Get_There  =  ""walk"""
+Show the most common country across members.,SELECT Country FROM member GROUP BY Country ORDER BY COUNT(*) DESC LIMIT 1
+List the information of all instructors ordered by their salary in ascending order.,SELECT * FROM instructor ORDER BY salary
+What destination has the fewest number of flights?,SELECT destination FROM Flight GROUP BY destination ORDER BY count(*) LIMIT 1
+What are the names of directors who directed movies with 5 star rating? Also return the title of these movies.,"SELECT T1.director ,  T1.title FROM Movie AS T1 JOIN Rating AS T2 ON T1.mID  =  T2.mID WHERE T2.stars  =  5"
+Show the dates of transactions if the share count is bigger than 100 or the amount is bigger than 1000.,SELECT date_of_transaction FROM TRANSACTIONS WHERE share_count  >  100 OR amount_of_transaction  >  1000
+Which products has been complained by the customer who has filed least amount of complaints?,SELECT DISTINCT t1.product_name FROM products AS t1 JOIN complaints AS t2 ON t1.product_id  =  t2.product_id JOIN customers AS t3 GROUP BY t3.customer_id ORDER BY count(*) LIMIT 1
+What are the ids of documents which don't have expense budgets?,SELECT document_id FROM Documents EXCEPT SELECT document_id FROM Documents_with_expenses
+Who is the oldest person whose job is student?,SELECT name FROM Person WHERE job  =  'student' AND age  =  (SELECT max(age) FROM person WHERE job  =  'student' )
+What are the hometowns of gymnasts and the corresponding number of gymnasts?,"SELECT T2.Hometown ,  COUNT(*) FROM gymnast AS T1 JOIN people AS T2 ON T1.Gymnast_ID  =  T2.People_ID GROUP BY T2.Hometown"
+list the states,SELECT state_name FROM state;
+What is the most common amenity in the dorms?,SELECT T1.amenity_name FROM dorm_amenity AS T1 JOIN has_amenity AS T2 ON T1.amenid  =  T2.amenid GROUP BY T2.amenid ORDER BY count(*) DESC LIMIT 1
+"What are the first year and last year of the parties whose theme is ""Spring"" or ""Teqnology""?","SELECT First_year ,  Last_year FROM party WHERE Party_Theme  =  ""Spring"" OR Party_Theme  =  ""Teqnology"""
+Which assets have 2 parts and have less than 2 fault logs? List the asset id and detail.,"SELECT T1.asset_id ,  T1.asset_details FROM Assets AS T1 JOIN Asset_Parts AS T2 ON T1.asset_id  =  T2.asset_id GROUP BY T1.asset_id HAVING count(*)  =  2 INTERSECT SELECT T1.asset_id ,  T1.asset_details FROM Assets AS T1 JOIN Fault_Log AS T2 ON T1.asset_id  =  T2.asset_id GROUP BY T1.asset_id HAVING count(*)  <  2"
+What is the number of states that has some college whose enrollment is larger than the average enrollment?,SELECT count(DISTINCT state) FROM college WHERE enr  >  (SELECT avg(enr) FROM college)
+What is the name of each aircraft and how many flights does each one complete?,"SELECT T2.name ,  count(*) FROM Flight AS T1 JOIN Aircraft AS T2 ON T1.aid  =  T2.aid GROUP BY T1.aid"
+What are the students ids of students who have more than one allergy?,SELECT StuID FROM Has_allergy GROUP BY StuID HAVING count(*)  >=  2
+Find the total amount of loans offered by each bank branch.,"SELECT sum(amount) ,  T1.bname FROM bank AS T1 JOIN loan AS T2 ON T1.branch_id  =  T2.branch_id GROUP BY T1.bname"
+What is the average age of students who are living in the dorm with the largest capacity?,SELECT avg(T1.age) FROM student AS T1 JOIN lives_in AS T2 ON T1.stuid  =  T2.stuid JOIN dorm AS T3 ON T3.dormid  =  T2.dormid WHERE T3.student_capacity  =  (SELECT max(student_capacity) FROM dorm)
+Show different colleges along with the number of authors of submission from each college.,"SELECT College ,  COUNT(*) FROM submission GROUP BY College"
+Show the delegate and committee information of elections.,"SELECT Delegate ,  Committee FROM election"
+Report all advisors that advise more than 2 students.,SELECT Advisor FROM STUDENT GROUP BY Advisor HAVING COUNT(*)  >  2
+"Which parties have delegates in both the ""Appropriations"" committee and the ""Economic Matters"" committee?","SELECT T2.Party FROM election AS T1 JOIN party AS T2 ON T1.Party  =  T2.Party_ID WHERE T1.Committee  =  ""Appropriations"" INTERSECT SELECT T2.Party FROM election AS T1 JOIN party AS T2 ON T1.Party  =  T2.Party_ID WHERE T1.Committee  =  ""Economic Matters"""
+How many distinct students are enrolled in courses?,SELECT count(DISTINCT student_id) FROM Student_Course_Enrolment
+"What is the shortest and most poorly rated song for each genre, ordered alphabetically by genre?","SELECT min(T1.duration) ,  min(T2.rating) ,  T2.genre_is FROM files AS T1 JOIN song AS T2 ON T1.f_id  =  T2.f_id GROUP BY T2.genre_is ORDER BY T2.genre_is"
+List the name of physicians who took some appointment.,SELECT T2.name FROM appointment AS T1 JOIN physician AS T2 ON T1.Physician  =  T2.EmployeeID
+"Find the number of members of club ""Pen and Paper Gaming"".","SELECT count(*) FROM club AS t1 JOIN member_of_club AS t2 ON t1.clubid  =  t2.clubid JOIN student AS t3 ON t2.stuid  =  t3.stuid WHERE t1.clubname  =  ""Pen and Paper Gaming"""
+Who is the director of movie Avatar?,SELECT director FROM Movie WHERE title  = 'Avatar'
+"display the full name (first and last), hire date, salary, and department number for those employees whose first name does not containing the letter M.","SELECT first_name ,  last_name ,  hire_date ,  salary ,  department_id FROM employees WHERE first_name NOT LIKE '%M%'"
+Which customer have the most policies? Give me the customer details.,SELECT t2.customer_details FROM policies AS t1 JOIN customers AS t2 ON t1.customer_id  =  t2.customer_id GROUP BY t2.customer_details ORDER BY count(*) DESC LIMIT 1
+What are the names and number of hours spent training for each player who trains for less than 1500 hours?,"SELECT pName ,  HS FROM Player WHERE HS  <  1500"
+what is the lowest point in the united states,SELECT lowest_point FROM highlow WHERE lowest_elevation  =  ( SELECT MIN ( lowest_elevation ) FROM highlow );
+how many states have cities named springfield,"SELECT COUNT ( state_name ) FROM city WHERE city_name  =  ""springfield"";"
+how many states border at least one other state,SELECT COUNT ( DISTINCT state_name ) FROM border_info;
+What are the names of companies with revenue between 100 and 150?,SELECT name FROM manufacturers WHERE revenue BETWEEN 100 AND 150
+How many drivers are from Hartford city or younger than 40?,SELECT count(*) FROM driver WHERE home_city  =  'Hartford' OR age  <  40
+Find the names of instructors who didn't each any courses in any Spring semester.,SELECT name FROM instructor WHERE id NOT IN (SELECT id FROM teaches WHERE semester  =  'Spring')
+"Which authors have written a paper with title containing the word ""Monadic""? Return their last names.","SELECT t1.lname FROM authors AS t1 JOIN authorship AS t2 ON t1.authid  =  t2.authid JOIN papers AS t3 ON t2.paperid  =  t3.paperid WHERE t3.title LIKE ""%Monadic%"""
+"Who performed the song named ""Badlands""? Show the first name and the last name.","SELECT T2.firstname ,  T2.lastname FROM Performance AS T1 JOIN Band AS T2 ON T1.bandmate  =  T2.id JOIN Songs AS T3 ON T3.SongId  =  T1.SongId WHERE T3.Title  =  ""Badlands"""
+Select all the data from the products and each product's manufacturer.,SELECT * FROM products AS T1 JOIN Manufacturers AS T2 ON T1.manufacturer  =  T2.code
+what states have rivers running through them,SELECT traverse FROM river;
+Find the first names of students studying in room 108.,SELECT firstname FROM list WHERE classroom  =  108
+What is the name and address of the department with the most students?,"SELECT T2.dept_name ,  T2.dept_address FROM student AS T1 JOIN department AS T2 ON T1.dept_code  =  T2.dept_code GROUP BY T1.dept_code ORDER BY count(*) DESC LIMIT 1"
+Find the distinct driver id of all drivers that have a longer stop duration than some drivers in the race whose id is 841?,"SELECT DISTINCT driverid ,  STOP FROM pitstops WHERE duration  >  (SELECT min(duration) FROM pitstops WHERE raceid  =  841)"
+"Find the code of the document type ""Paper"".","SELECT document_type_code FROM Ref_document_types WHERE document_type_name  =  ""Paper"""
+"Which customers have used the service named ""Close a policy"" or ""Upgrade a policy""? Give me the customer names.","SELECT t1.customer_name FROM customers AS t1 JOIN first_notification_of_loss AS t2 ON t1.customer_id  =  t2.customer_id JOIN services AS t3 ON t2.service_id  =  t3.service_id WHERE t3.service_name  =  ""Close a policy"" OR t3.service_name  =  ""Upgrade a policy"""
+what is the population of the largest state,SELECT population FROM state WHERE area  =  ( SELECT MAX ( area ) FROM state );
+List official names of cities in descending order of population.,SELECT Official_Name FROM city ORDER BY Population DESC
+"Show the starting years shared by technicians from team ""CLE"" and ""CWS"".","SELECT Starting_Year FROM technician WHERE Team  =  ""CLE"" INTERSECT SELECT Starting_Year FROM technician WHERE Team  =  ""CWS"""
+"For each product type, return the maximum and minimum price.","SELECT product_type_code ,  max(product_price) ,  min(product_price) FROM products GROUP BY product_type_code"
+Find the id of the appointment with the most recent start date?,SELECT appointmentid FROM appointment ORDER BY START DESC LIMIT 1
+Show all headquarters without a company in banking industry.,SELECT headquarters FROM company EXCEPT SELECT headquarters FROM company WHERE main_industry  =  'Banking'
+What are the names of the courses in alphabetical order?,SELECT course_name FROM courses ORDER BY course_name
+"For each zip code, what is the average mean temperature for all dates that start with '8'?","SELECT zip_code  ,  avg(mean_temperature_f) FROM weather WHERE date LIKE ""8/%"" GROUP BY zip_code"
+How many movies were made before 2000?,SELECT count(*) FROM Movie WHERE YEAR  <  2000
+"Show all storm names affecting region ""Denmark"".",SELECT T3.name FROM affected_region AS T1 JOIN region AS T2 ON T1.region_id  =  T2.region_id JOIN storm AS T3 ON T1.storm_id  =  T3.storm_id WHERE T2.region_name  =  'Denmark'
+Give the distinct famous release dates for all artists.,SELECT distinct(Famous_Release_date) FROM artist
+What is the address of each course author or tutor?,SELECT address_line_1 FROM Course_Authors_and_Tutors
+How many candidates are there?,SELECT count(*) FROM candidate
+What is the total number of purchases for members with level 6?,SELECT count(*) FROM purchase AS T1 JOIN member AS T2 ON T1.member_id  =  T2.member_id WHERE T2.level  =  6
+What are the emails and phone numbers of custoemrs who have never filed a complaint?,"SELECT email_address ,  phone_number FROM customers WHERE customer_id NOT IN (SELECT customer_id FROM complaints)"
+"What are the wifi and screen mode type of the hardware model named ""LG-P760""?","SELECT T1.WiFi , T3.Type FROM chip_model AS T1 JOIN phone AS T2 ON T1.Model_name  =  T2.chip_model JOIN screen_mode AS T3 ON T2.screen_mode = T3.Graphics_mode WHERE T2.Hardware_Model_name = ""LG-P760"";"
+How many people are older than every engineer?,SELECT count(*) FROM Person WHERE age  >  (SELECT max(age) FROM person WHERE job  =  'engineer')
+How many different kinds of clients are supported by the web clients accelerators?,SELECT count(DISTINCT client) FROM web_client_accelerator
+Find the origins from which more than 1 train starts.,SELECT origin FROM train GROUP BY origin HAVING count(*)  >  1
+"Find the titles of the papers that contain the word ""ML"".","SELECT title FROM papers WHERE title LIKE ""%ML%"""
+Find the first and last name of students who are not in the largest major.,"SELECT fname ,  lname FROM student WHERE major != (SELECT major FROM student GROUP BY major ORDER BY count(*) DESC LIMIT 1)"
+"Which artist does the album ""Balls to the Wall"" belong to?","SELECT T2.Name FROM ALBUM AS T1 JOIN ARTIST AS T2 ON T1.ArtistId  =  T2.ArtistId WHERE T1.Title  =  ""Balls to the Wall"""
+What are the names of the characteristics of the product 'sesame' that have the characteristic type code 'Grade'?,"SELECT t3.characteristic_name FROM products AS t1 JOIN product_characteristics AS t2 ON t1.product_id  =  t2.product_id JOIN CHARACTERISTICS AS t3 ON t2.characteristic_id  =  t3.characteristic_id WHERE t1.product_name  =  ""sesame"" AND t3.characteristic_type_code  =  ""Grade"""
+What is the total number of professors with a Ph.D. ?,SELECT count(*) FROM professor WHERE prof_high_degree  =  'Ph.D.'
+"Show the positions of the players from the team with name ""Ryley Goldner"".","SELECT T1.Position FROM match_season AS T1 JOIN team AS T2 ON T1.Team  =  T2.Team_id WHERE T2.Name  =  ""Ryley Goldner"""
+"For each submission, find its author and acceptance result.","SELECT T2.Author ,  T1.Result FROM acceptance AS T1 JOIN submission AS T2 ON T1.Submission_ID  =  T2.Submission_ID"
+What are the average and minimum age of captains in different class?,"SELECT avg(age) ,  min(age) ,  CLASS FROM captain GROUP BY CLASS"
+List the locations of schools that do not have any player.,SELECT LOCATION FROM school WHERE School_ID NOT IN (SELECT School_ID FROM Player)
+"What is the id, name and IATA code of the airport that had most number of flights?","SELECT T1.id ,  T1.name ,  T1.IATA FROM airport AS T1 JOIN flight AS T2 ON T1.id  =  T2.airport_id GROUP BY T2.id ORDER BY count(*) DESC LIMIT 1"
+What are the faculty ids of all the male faculty members?,SELECT FacID FROM Faculty WHERE Sex  =  'M'
+Find the number of routes for each source airport and the airport name.,"SELECT count(*) ,  T1.name FROM airports AS T1 JOIN routes AS T2 ON T1.apid  =  T2.src_apid GROUP BY T1.name"
+Find the number of customers in the banks at New York City.,SELECT sum(no_of_customers) FROM bank WHERE city  =  'New York City'
+What are the first and last names of the top 10 longest-serving employees?,"SELECT first_name , last_name FROM employees ORDER BY hire_date ASC LIMIT 10;"
+which state has the longest river,SELECT traverse FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river );
+What are the names of all the playlists?,SELECT name FROM playlists;
+Return ids of all the products that are supplied by supplier id 2 and are more expensive than the average price of all products.,SELECT T1.product_id FROM product_suppliers AS T1 JOIN products AS T2 ON T1.product_id  =  T2.product_id WHERE T1.supplier_id  =  2 AND T2.product_price  >  (SELECT avg(product_price) FROM products)
+Which department has the largest number of employees?,SELECT name FROM department GROUP BY departmentID ORDER BY count(departmentID) DESC LIMIT 1;
+Find the names of the customers who have an deputy policy.,"SELECT DISTINCT t2.customer_details FROM policies AS t1 JOIN customers AS t2 ON t1.customer_id  =  t2.customer_id WHERE t1.policy_type_code  =  ""Deputy"""
+What are names of patients who made an appointment?,SELECT name FROM appointment AS T1 JOIN patient AS T2 ON T1.patient  =  T2.ssn
+"Find the names of courses taught by the tutor who has personal name ""Julio"".","SELECT T2.course_name FROM Course_Authors_and_Tutors AS T1 JOIN Courses AS T2 ON T1.author_id  =  T2.author_id WHERE T1.personal_name  =  ""Julio"""
+"Which apartments have bookings with status code ""Confirmed""? Return their apartment numbers.","SELECT DISTINCT T2.apt_number FROM Apartment_Bookings AS T1 JOIN Apartments AS T2 ON T1.apt_id  =  T2.apt_id WHERE T1.booking_status_code  =  ""Confirmed"""
+what is the name and age of the youngest winning pilot?,"SELECT t1.name ,  t1.age FROM pilot AS t1 JOIN MATCH AS t2 ON t1.pilot_id  =  t2.winning_pilot ORDER BY t1.age LIMIT 1"
+"Retrieve the average age of members of the club ""Tennis Club"".","SELECT avg(t3.age) FROM club AS t1 JOIN member_of_club AS t2 ON t1.clubid  =  t2.clubid JOIN student AS t3 ON t2.stuid  =  t3.stuid WHERE t1.clubname  =  ""Tennis Club"""
+What are the names of the songs that have a lower rating than at least one blues song?,"SELECT song_name FROM song WHERE rating  <  (SELECT max(rating) FROM song WHERE genre_is  =  ""blues"")"
+"Return the characters for actors, ordered by age descending.",SELECT Character FROM actor ORDER BY age DESC
+What are the publishers who have published a book in both 1989 and 1990?,SELECT publisher FROM book_club WHERE YEAR  =  1989 INTERSECT SELECT publisher FROM book_club WHERE YEAR  =  1990
+Find the first names and degree of all professors who are teaching some class in Computer Info. Systems department.,"SELECT DISTINCT T2.emp_fname ,  T3.prof_high_degree FROM CLASS AS T1 JOIN employee AS T2 ON T1.prof_num  =  T2.emp_num JOIN professor AS T3 ON T2.emp_num  =  T3.emp_num JOIN department AS T4 ON T4.dept_code  =  T3.dept_code WHERE T4.dept_name  =  'Computer Info. Systems'"
+Show the country names and the corresponding number of players.,"SELECT Country_name ,  COUNT(*) FROM country AS T1 JOIN match_season AS T2 ON T1.Country_id  =  T2.Country GROUP BY T1.Country_name"
+What are all the distinct details of the customers?,SELECT DISTINCT customer_details FROM Customers
+"For each director, what are the titles and ratings for all the movies they reviewed?","SELECT T2.title ,  T1.stars ,  T2.director ,  max(T1.stars) FROM Rating AS T1 JOIN Movie AS T2 ON T1.mID  =  T2.mID WHERE director != ""null"" GROUP BY director"
+"Return the average transaction amount, as well as the total amount of all transactions.","SELECT avg(transaction_amount) ,  sum(transaction_amount) FROM Financial_transactions"
+"Return the booking start date and end date for the apartments that have type code ""Duplex"".","SELECT T1.booking_start_date ,  T1.booking_start_date FROM Apartment_Bookings AS T1 JOIN Apartments AS T2 ON T1.apt_id  =  T2.apt_id WHERE T2.apt_type_code  =  ""Duplex"""
+List the names of studios that have at least two films.,SELECT Studio FROM film GROUP BY Studio HAVING COUNT(*)  >=  2
+In which year are there festivals both inside the 'United States' and outside the 'United States'?,SELECT YEAR FROM festival_detail WHERE LOCATION  =  'United States' INTERSECT SELECT YEAR FROM festival_detail WHERE LOCATION != 'United States'
+display the employee name ( first name and last name ) and hire date for all employees in the same department as Clara.,"SELECT first_name ,  last_name ,  hire_date FROM employees WHERE department_id  =  (SELECT department_id FROM employees WHERE first_name  =  ""Clara"")"
+Who is the youngest male?,SELECT name FROM Person WHERE gender  =  'male' AND age  =  (SELECT min(age) FROM person WHERE gender  =  'male' )
+Find the total population of the top 3 districts with the largest area.,SELECT sum(city_population) FROM district ORDER BY city_area DESC LIMIT 3
+How many colors are there?,SELECT count(*) FROM ref_colors
+What is the placement date of the order whose invoice number is 10?,SELECT T1.date_order_placed FROM orders AS T1 JOIN shipments AS T2 ON T1.order_id = T2.order_id WHERE T2.invoice_number = 10
+What are the medicine and trade names that cannot interact with the enzyme with the product 'Heme'?,"SELECT name ,  trade_name FROM medicine EXCEPT SELECT T1.name ,  T1.trade_name FROM medicine AS T1 JOIN medicine_enzyme_interaction AS T2 ON T2.medicine_id  =  T1.id JOIN enzyme AS T3 ON T3.id  =  T2.enzyme_id WHERE T3.product  =  'Protoporphyrinogen IX'"
+Show the name and location for all tracks.,"SELECT name ,  LOCATION FROM track"
+"Show the description of transaction type with code ""PUR"".","SELECT transaction_type_description FROM Ref_Transaction_Types WHERE transaction_type_code	  =  ""PUR"""
+Count the number of different software platforms.,SELECT count(DISTINCT Software_Platform) FROM device
+Show all cities without a branch having more than 100 memberships.,SELECT city FROM branch EXCEPT SELECT city FROM branch WHERE membership_amount  >  100
+what are the details of the cmi masters that have the cross reference code 'Tax'?,SELECT T1.cmi_details FROM Customer_Master_Index AS T1 JOIN CMI_Cross_References AS T2 ON T1.master_customer_id  =  T2.master_customer_id WHERE T2.source_system_code  =  'Tax'
+Find the number of rooms located on each block floor.,"SELECT count(*) ,  T1.blockfloor FROM BLOCK AS T1 JOIN room AS T2 ON T1.blockfloor  =  T2.blockfloor AND T1.blockcode  =  T2.blockcode GROUP BY T1.blockfloor"
+What is the campus fee in the year 2000 for San Jose State University?,"SELECT t1.campusfee FROM csu_fees AS t1 JOIN campuses AS t2 ON t1.campus  =  t2.id WHERE t2.campus  =  ""San Jose State University"" AND t1.year  =  2000"
+How many distinct companies are there?,SELECT count(DISTINCT Company) FROM entrepreneur
+What is the average length in feet of the bridges?,SELECT avg(length_feet) FROM bridge
+What are the employee ids for employees who have held two or more jobs?,SELECT employee_id FROM job_history GROUP BY employee_id HAVING COUNT(*)  >= 2
+What are the ids of all songs that have higher resolution of the average resolution in the modern genre?,"SELECT f_id FROM song WHERE resolution  >  (SELECT avg(resolution) FROM song WHERE genre_is  =  ""modern"")"
+Return the codes of the document types that do not have a total access count of over 10000.,SELECT document_type_code FROM documents GROUP BY document_type_code HAVING sum(access_count)  >  10000
+What are the name and phone of the customer with the most ordered product quantity?,"SELECT  T1.customer_name ,  T1.customer_phone FROM customers AS T1 JOIN customer_orders AS T2 ON T1.customer_id  =  T2.customer_id JOIN order_items AS T3 ON T3.order_id  =  T2.order_id GROUP BY T1.customer_id ORDER BY sum(T3.order_quantity) DESC LIMIT 1"
+Compute the total amount of payment processed.,SELECT sum(Amount_Payment) FROM Payments
+Find the id and local authority of the station whose maximum precipitation is higher than 50.,"SELECT t2.id ,  t2.local_authority FROM weekly_weather AS t1 JOIN station AS t2 ON t1.station_id  =  t2.id GROUP BY t1.station_id HAVING max(t1.precipitation)  >  50"
+What are the names of all districts with a city area greater than 10 or have more than 100000 people living there?,SELECT district_name FROM district WHERE city_area  >  10 OR City_Population  >  100000
+what major rivers run through illinois,"SELECT river_name FROM river WHERE LENGTH  >  750 AND traverse  =  ""illinois"";"
+Find the number of distinct room types available.,SELECT count(DISTINCT roomtype) FROM room
+Show all flight numbers with aircraft Airbus A340-300.,"SELECT T1.flno FROM Flight AS T1 JOIN Aircraft AS T2 ON T1.aid  =  T2.aid WHERE T2.name  =  ""Airbus A340-300"""
+What is the type of vocables that appears most frequently?,SELECT TYPE FROM vocals GROUP BY TYPE ORDER BY count(*) DESC LIMIT 1
+"Among all the claims, what is the settlement amount of the claim with the largest claim amount? List both the settlement amount and claim amount.","SELECT Amount_Settled ,  Amount_Claimed FROM Claims ORDER BY Amount_Claimed DESC LIMIT 1"
+Show the name and service for all trains in order by time.,"SELECT name ,  service FROM train ORDER BY TIME"
+Find the id for the trips that lasted at least as long as the average duration of trips in zip code 94103.,SELECT id FROM trip WHERE duration  >=  (SELECT avg(duration) FROM trip WHERE zip_code  =  94103)
+Find the name and savings balance of the top 3 accounts with the highest saving balance sorted by savings balance in descending order.,"SELECT T1.name ,  T2.balance FROM accounts AS T1 JOIN savings AS T2 ON T1.custid  =  T2.custid ORDER BY T2.balance DESC LIMIT 3"
+What is the average access count of documents?,SELECT avg(access_count) FROM documents
+How many different students are involved in sports?,SELECT count(DISTINCT StuID) FROM Sportsinfo
+Compute the total amount of settlement across all the settlements.,SELECT sum(Amount_Settled) FROM Settlements
+Which wineries produce at least four wines?,SELECT Winery FROM WINE GROUP BY Winery HAVING count(*)  >=  4
+List all the types of forms.,SELECT DISTINCT form_type_code FROM forms
+Find the name of the user who gives the most reviews.,SELECT T1.name FROM useracct AS T1 JOIN review AS T2 ON T1.u_id  =  T2.u_id GROUP BY T2.u_id ORDER BY count(*) DESC LIMIT 1
+Return all detention summaries.,SELECT detention_summary FROM Detention
+How many professors teach a class with the code ACCT-211?,"SELECT count(DISTINCT PROF_NUM) FROM CLASS WHERE CRS_CODE  =  ""ACCT-211"""
+what states does the ohio river run through,"SELECT traverse FROM river WHERE river_name  =  ""ohio"";"
+What is the total number of residents for the districts with the 3 largest areas?,SELECT sum(city_population) FROM district ORDER BY city_area DESC LIMIT 3
+Find the full name of employee who supported the most number of customers.,"SELECT T1.first_name , T1.last_name FROM employees AS T1 JOIN customers AS T2 ON T1.id  =  T2.support_rep_id GROUP BY T1.id ORDER BY count(*) DESC LIMIT 1"
+Return the maximum and minimum customer codes.,"SELECT max(customer_code) ,  min(customer_code) FROM Customers"
+What is the average and largest salary of all employees?,"SELECT avg(salary) ,  max(salary) FROM Employee"
+List document id of documents status is done and document type is Paper and the document is shipped by shipping agent named USPS.,"SELECT document_id FROM Documents WHERE document_status_code  =  ""done"" AND document_type_code = ""Paper"" INTERSECT SELECT document_id FROM Documents JOIN Ref_Shipping_Agents ON Documents.shipping_agent_code = Ref_Shipping_Agents.shipping_agent_code WHERE Ref_Shipping_Agents.shipping_agent_name = ""USPS"";"
+What is the average unit price of tracks that belong to Jazz genre?,"SELECT AVG(UnitPrice) FROM GENRE AS T1 JOIN TRACK AS T2 ON T1.GenreId  =  T2.GenreId WHERE T1.Name  =  ""Jazz"""
+"Count the products that have the color description ""white"" or have the characteristic name ""hot"".","SELECT count(*) FROM products AS t1 JOIN product_characteristics AS t2 ON t1.product_id  =  t2.product_id JOIN CHARACTERISTICS AS t3 ON t2.characteristic_id  =  t3.characteristic_id JOIN ref_colors AS t4 ON t1.color_code  =  t4.color_code WHERE t4.color_description  =  ""white"" OR t3.characteristic_name  =  ""hot"""
+List the name of the stadium where both the player 'Walter Samuel' and the player 'Thiago Motta' got injured.,SELECT T2.name FROM game AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.id JOIN injury_accident AS T3 ON T1.id  =  T3.game_id WHERE T3.player  =  'Walter Samuel' INTERSECT SELECT T2.name FROM game AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.id JOIN injury_accident AS T3 ON T1.id  =  T3.game_id WHERE T3.player  =  'Thiago Motta'
+how many states have cities or towns named springfield,"SELECT COUNT ( state_name ) FROM city WHERE city_name  =  ""springfield"";"
+Find the name and hours of project that has the most number of scientists.,"SELECT T1.name ,  T1.hours FROM projects AS T1 JOIN assignedto AS T2 ON T1.code  =  T2.project GROUP BY T2.project ORDER BY count(*) DESC LIMIT 1"
+Find all details for each swimmer.,SELECT * FROM swimmer
+"For each zip code, find the ids of all trips that have a higher average mean temperature above 60?",SELECT T1.id FROM trip AS T1 JOIN weather AS T2 ON T1.zip_code  =  T2.zip_code GROUP BY T2.zip_code HAVING avg(T2.mean_temperature_f)  >  60
+How many games are played for all football games by students on scholarship?,"SELECT sum(gamesplayed) FROM Sportsinfo WHERE sportname  =  ""Football"" AND onscholarship  =  'Y'"
+Count the number of students the teacher LORIA ONDERSMA teaches.,"SELECT count(*) FROM list AS T1 JOIN teachers AS T2 ON T1.classroom  =  T2.classroom WHERE T2.firstname  =  ""LORIA"" AND T2.lastname  =  ""ONDERSMA"""
+which country did participated in the most number of Tournament competitions?,SELECT country FROM competition WHERE competition_type  =  'Tournament' GROUP BY country ORDER BY count(*) DESC LIMIT 1
+What are the different pilot names who had piloted a flight in the country 'United States' or in the airport named 'Billund Airport'?,SELECT DISTINCT T2.pilot FROM airport AS T1 JOIN flight AS T2 ON T1.id  =  T2.airport_id WHERE T1.country  =  'United States' OR T1.name  =  'Billund Airport'
+what is the highest elevation in delaware,"SELECT highest_elevation FROM highlow WHERE state_name  =  ""delaware"";"
+What is the total number of all football games played by scholarship students?,"SELECT sum(gamesplayed) FROM Sportsinfo WHERE sportname  =  ""Football"" AND onscholarship  =  'Y'"
+What are the names of ships that are commanded by both captains with the rank of Midshipman and captains with the rank of Lieutenant?,SELECT t1.name FROM ship AS t1 JOIN captain AS t2 ON t1.ship_id  =  t2.ship_id WHERE t2.rank  =  'Midshipman' INTERSECT SELECT t1.name FROM ship AS t1 JOIN captain AS t2 ON t1.ship_id  =  t2.ship_id WHERE t2.rank  =  'Lieutenant'
+Find all the payment dates for the payments with an amount larger than 10 and the payments handled by a staff person with the first name Elsa.,SELECT payment_date FROM payment WHERE amount  >  10 UNION SELECT T1.payment_date FROM payment AS T1 JOIN staff AS T2 ON T1.staff_id  =  T2.staff_id WHERE T2.first_name  =  'Elsa'
+What are the ids of all male students who do not play football?,"SELECT StuID FROM Student WHERE sex  =  'M' EXCEPT SELECT StuID FROM Sportsinfo WHERE sportname  =  ""Football"""
+Give me the start station and end station for the trips with the three oldest id.,"SELECT start_station_name ,  end_station_name FROM trip ORDER BY id LIMIT 3"
+What is the role name and role description for employee called Ebba?,"SELECT T2.role_name ,  T2.role_description FROM Employees AS T1 JOIN ROLES AS T2 ON T1.role_code  =  T2.role_code WHERE T1.employee_name  =  ""Ebba"""
+How many kinds of enzymes are there?,SELECT count(*) FROM enzyme
+How many members are there?,SELECT count(*) FROM member
+Return the different classes of races.,SELECT DISTINCT CLASS FROM race
+Find the name of dorms which have TV Lounge but no Study Room as amenity.,SELECT T1.dorm_name FROM dorm AS T1 JOIN has_amenity AS T2 ON T1.dormid  =  T2.dormid JOIN dorm_amenity AS T3 ON T2.amenid  =  T3.amenid WHERE T3.amenity_name  =  'TV Lounge' EXCEPT SELECT T1.dorm_name FROM dorm AS T1 JOIN has_amenity AS T2 ON T1.dormid  =  T2.dormid JOIN dorm_amenity AS T3 ON T2.amenid  =  T3.amenid WHERE T3.amenity_name  =  'Study Room'
+what are the cities in states through which the mississippi runs,"SELECT city_name FROM city WHERE state_name IN ( SELECT traverse FROM river WHERE river_name  =  ""mississippi"" );"
+what state has highest elevation,SELECT state_name FROM highlow WHERE highest_elevation  =  ( SELECT MAX ( highest_elevation ) FROM highlow );
+Return all the committees that have delegates from Democratic party.,"SELECT T1.Committee FROM election AS T1 JOIN party AS T2 ON T1.Party  =  T2.Party_ID WHERE T2.Party  =  ""Democratic"""
+Give the maximum price and score for wines produced in the appelation St. Helena.,"SELECT max(Price) ,  max(Score) FROM WINE WHERE Appelation  =  ""St. Helena"""
+What is the total balance of savings accounts not belonging to someone with the name Brown?,SELECT sum(T2.balance) FROM accounts AS T1 JOIN savings AS T2 ON T1.custid  =  T2.custid WHERE T1.name != 'Brown'
+Show names for all aircrafts with distances more than the average.,SELECT name FROM Aircraft WHERE distance  >  (SELECT avg(distance) FROM Aircraft)
+List the names of all distinct wines that are made of red color grape.,"SELECT DISTINCT T2.Name FROM GRAPES AS T1 JOIN WINE AS T2 ON T1.Grape  =  T2.Grape WHERE T1.Color  =  ""Red"""
+What are the different names of mountains ascended by climbers from the country of West Germany?,"SELECT DISTINCT T2.Name FROM climber AS T1 JOIN mountain AS T2 ON T1.Mountain_ID  =  T2.Mountain_ID WHERE T1.Country  =  ""West Germany"""
+What are the visit date and details of the visitor whose detail is 'Vincent'?,"SELECT T2.Visit_Date ,  T2.Visit_Details FROM VISITORS AS T1 JOIN VISITS AS T2 ON T1.Tourist_ID  =  T2.Tourist_ID WHERE T1.Tourist_Details  =  ""Vincent"""
+What are the mascots for schools with enrollments above the average?,SELECT mascot FROM school WHERE enrollment  >  (SELECT avg(enrollment) FROM school)
+"What are the names and buildings of the deparments, sorted by budget descending?","SELECT dept_name ,  building FROM department ORDER BY budget DESC"
+Show all the faculty ranks and the number of students advised by each rank.,"SELECT T1.rank ,  count(*) FROM Faculty AS T1 JOIN Student AS T2 ON T1.FacID  =  T2.advisor GROUP BY T1.rank"
+Find the name and email for the users who have more than one follower.,"SELECT T1.name ,  T1.email FROM user_profiles AS T1 JOIN follows AS T2 ON T1.uid  =  T2.f1 GROUP BY T2.f1 HAVING count(*)  >  1"
+"In February, which city marks the highest temperature?",SELECT T1.city FROM city AS T1 JOIN temperature AS T2 ON T1.city_id  =  T2.city_id ORDER BY T2.Feb DESC LIMIT 1
+Give me the description of the service type that offers not only the photo product but also the film product.,SELECT T1.Service_Type_Description FROM Ref_Service_Types AS T1 JOIN Services AS T2 ON T1.Service_Type_Code  =  T2.Service_Type_Code WHERE T2.Product_Name  =  'photo' INTERSECT SELECT T1.Service_Type_Description FROM Ref_Service_Types AS T1 JOIN Services AS T2 ON T1.Service_Type_Code  =  T2.Service_Type_Code WHERE T2.Product_Name  =  'film'
+"What is the campus fee of ""San Jose State University"" in year 1996?","SELECT campusfee FROM campuses AS T1 JOIN csu_fees AS T2 ON T1.id  =  t2.campus WHERE t1.campus  =  ""San Jose State University"" AND T2.year  =  1996"
+What is the number of airlines based in Russia?,SELECT count(*) FROM airlines WHERE country  =  'Russia'
+"What are the instruments are used in the song ""Le Pop""?","SELECT instrument FROM instruments AS T1 JOIN songs AS T2 ON T1.songid  =  T2.songid WHERE title  =  ""Le Pop"""
+What are the catalog entry names of the products with next entry ID above 8?,SELECT catalog_entry_name FROM catalog_contents WHERE next_entry_id  >  8
+Find the names of either colleges in LA with greater than 15000 size or in state AZ with less than 13000 enrollment.,"SELECT cName FROM College WHERE enr  <  13000 AND state = ""AZ"" UNION SELECT cName FROM College WHERE enr  >  15000 AND state = ""LA"""
+What are the distinct wineries which produce wines costing between 50 and 100?,SELECT DISTINCT Winery FROM WINE WHERE Price BETWEEN 50 AND 100
+What are the nicknames of schools whose division is not 1?,"SELECT Nickname FROM school_details WHERE Division != ""Division 1"""
+"What is the average, maximum, and minimum for the number of hours spent training?","SELECT avg(HS) ,  max(HS) ,  min(HS) FROM Player"
+"How many team franchises are active, with active value 'Y'?",SELECT count(*) FROM team_franchise WHERE active = 'Y';
+how many cities named austin are there in the usa,"SELECT COUNT ( city_name ) FROM city WHERE city_name  =  ""austin"";"
+"Find the number of trains for each station, as well as the station network name and services.","SELECT count(*) ,  t1.network_name ,  t1.services FROM station AS t1 JOIN route AS t2 ON t1.id  =  t2.station_id GROUP BY t2.station_id"
+"How many credits is the course that the student with the last name Smithson took, and what is its description?","SELECT T4.crs_description ,  T4.crs_credit FROM CLASS AS T1 JOIN enroll AS T2 ON T1.class_code  =  T2.class_code JOIN student AS T3 ON T3.stu_num  =  T2.stu_num JOIN course AS T4 ON T4.crs_code  =  T1.crs_code WHERE T3.stu_lname  =  'Smithson'"
+What are the first names and birthdates of the professors in charge of ACCT-211?,"SELECT DISTINCT T1.EMP_FNAME ,  T1.EMP_DOB FROM employee AS T1 JOIN CLASS AS T2 ON T1.EMP_NUM  =  T2.PROF_NUM WHERE CRS_CODE  =  ""ACCT-211"""
+what are the major cities in the states through which the major river in virginia runs,"SELECT city_name FROM city WHERE population  >  150000 AND state_name IN ( SELECT traverse FROM river WHERE river_name IN ( SELECT river_name FROM river WHERE LENGTH  >  750 AND traverse  =  ""virginia"" ) );"
+Return the id of the staff whose Staff Department Assignment was earlier than that of any Clerical Staff.,SELECT staff_id FROM Staff_Department_Assignments WHERE date_assigned_to  <  (SELECT max(date_assigned_to) FROM Staff_Department_Assignments WHERE job_title_code  =  'Clerical Staff')
+What are the names of all the clubs ordered in descending alphabetical order?,SELECT name FROM club ORDER BY name DESC
+What are the names of body builders whose total score is higher than 300?,SELECT T2.Name FROM body_builder AS T1 JOIN people AS T2 ON T1.People_ID  =  T2.People_ID WHERE T1.Total  >  300
+Find the student ID and middle name for all the students with at most two enrollments.,"SELECT T1.student_id ,  T2.middle_name FROM Student_Course_Enrolment AS T1 JOIN Students AS T2 ON T1.student_id  =  T2.student_id GROUP BY T1.student_id HAVING COUNT(*)  <=  2"
+What are the names of the cameras that have taken picture of the most mountains?,SELECT T2.name FROM photos AS T1 JOIN camera_lens AS T2 ON T1.camera_lens_id  =  T2.id GROUP BY T2.id ORDER BY count(*) DESC LIMIT 1
+List the names of patients who have made appointments.,SELECT name FROM appointment AS T1 JOIN patient AS T2 ON T1.patient  =  T2.ssn
+What are the details for the project whose research has been published?,SELECT T1.project_details FROM Projects AS T1 JOIN Project_outcomes AS T2 ON T1.project_id  =  T2.project_id JOIN Research_outcomes AS T3 ON T2.outcome_code  =  T3.outcome_code WHERE T3.outcome_description LIKE '%Published%'
+What is the name of the shop that has the greatest quantity of devices in stock?,SELECT T2.Shop_Name FROM stock AS T1 JOIN shop AS T2 ON T1.Shop_ID  =  T2.Shop_ID GROUP BY T1.Shop_ID ORDER BY SUM(T1.quantity) DESC LIMIT 1
+Count the number of players who were born in USA and have bats information 'R'.,SELECT count(*) FROM player WHERE birth_country = 'USA' AND bats  =  'R';
+Please show the team that has the most number of technicians.,SELECT Team FROM technician GROUP BY Team ORDER BY COUNT(*) DESC LIMIT 1
+Show the distinct director of films with market estimation in the year of 1995.,SELECT DISTINCT T1.Director FROM film AS T1 JOIN film_market_estimation AS T2 ON T1.Film_ID  =  T2.Film_ID WHERE T2.Year  =  1995
+Show the players from college UCLA.,"SELECT Player FROM match_season WHERE College  =  ""UCLA"""
+Show all product colors.,SELECT DISTINCT product_color FROM Products
+what is the lowest point of all states through which the mississippi river runs through,"SELECT lowest_point FROM highlow WHERE state_name IN ( SELECT traverse FROM river WHERE river_name  =  ""mississippi"" ) ORDER BY lowest_elevation LIMIT 1;"
+"In 2014, what are the id and rank of the team that has the largest average number of attendance?","SELECT T2.team_id ,  T2.rank FROM home_game AS T1 JOIN team AS T2 ON T1.team_id  =  T2.team_id WHERE T1.year  =  2014 GROUP BY T1.team_id ORDER BY avg(T1.attendance) DESC LIMIT 1;"
+How many students are there?,SELECT count(*) FROM student
+"What are the different budget type codes, and how many documents are there for each?","SELECT budget_type_code ,  count(*) FROM Documents_with_expenses GROUP BY budget_type_code"
+What are the names of all the aircrafts associated with London Gatwick airport?,"SELECT T1.Aircraft FROM aircraft AS T1 JOIN airport_aircraft AS T2 ON T1.Aircraft_ID  =  T2.Aircraft_ID JOIN airport AS T3 ON T2.Airport_ID  =  T3.Airport_ID WHERE T3.Airport_Name  =  ""London Gatwick"""
+What are the names and job titles of every person ordered alphabetically by name?,"SELECT name ,  job FROM Person ORDER BY name"
+What is the name and distance for aircraft with id 12?,"SELECT name ,  distance FROM Aircraft WHERE aid  =  12"
+What are the last names of customers without invoice totals exceeding 20?,SELECT LastName FROM CUSTOMER EXCEPT SELECT T1.LastName FROM CUSTOMER AS T1 JOIN Invoice AS T2 ON T1.CustomerId  =  T2.CustomerId WHERE T2.total  >  20
+When and in what zip code did max temperature reach 80?,"SELECT date ,  zip_code FROM weather WHERE max_temperature_f  >=  80"
+how many major cities are there,SELECT COUNT ( city_name ) FROM city WHERE population  >  150000;
+What is the number of routes operated by the airline American Airlines whose destinations are in Italy?,SELECT count(*) FROM routes AS T1 JOIN airports AS T2 ON T1.dst_apid  =  T2.apid JOIN airlines AS T3 ON T1.alid  =  T3.alid WHERE T2.country  =  'Italy' AND T3.name  =  'American Airlines'
+"For how many clubs is ""Tracy Kim"" a member?","SELECT count(*) FROM club AS t1 JOIN member_of_club AS t2 ON t1.clubid  =  t2.clubid JOIN student AS t3 ON t2.stuid  =  t3.stuid WHERE t3.fname  =  ""Tracy"" AND t3.lname  =  ""Kim"""
+Find the name of the swimmer who has at least 2 records.,SELECT t1.name FROM swimmer AS t1 JOIN record AS t2 ON t1.id  =  t2.swimmer_id GROUP BY t2.swimmer_id HAVING count(*)  >=  2
+Count the number of distinct instructors who have taught a course.,SELECT COUNT (DISTINCT id) FROM teaches
+"What is the first name of the author with last name ""Ueno""?","SELECT fname FROM authors WHERE lname  =  ""Ueno"""
+What is the total number of faculty members?,SELECT count(*) FROM Faculty
+What are the codes of all the courses that are located in room KLR209?,SELECT class_code FROM CLASS WHERE class_room  =  'KLR209'
+How many products are there in the records?,SELECT count(*) FROM catalog_contents
+Give the name of the lowest earning instructor in the Statistics department.,SELECT name FROM instructor WHERE dept_name  =  'Statistics' ORDER BY salary LIMIT 1
+What amenities does Smith Hall have in alphabetical order?,SELECT T3.amenity_name FROM dorm AS T1 JOIN has_amenity AS T2 ON T1.dormid  =  T2.dormid JOIN dorm_amenity AS T3 ON T2.amenid  =  T3.amenid WHERE T1.dorm_name  =  'Smith Hall' ORDER BY T3.amenity_name
+Find the name of customers whose credit score is below the average credit scores of all customers.,SELECT cust_name FROM customer WHERE credit_score  <  (SELECT avg(credit_score) FROM customer)
+What are the names and salaries of instructors who advise students in the Math department?,"SELECT T2.name ,  T2.salary FROM advisor AS T1 JOIN instructor AS T2 ON T1.i_id  =  T2.id JOIN student AS T3 ON T1.s_id  =  T3.id WHERE T3.dept_name  =  'Math'"
+List the count and id of each product in all the orders.,"SELECT count(*) ,  T3.product_id FROM orders AS T1 JOIN order_items AS T2 JOIN products AS T3 ON T1.order_id = T2.order_id AND T2.product_id = T3.product_id GROUP BY T3.product_id"
+What are the names of companies with revenue less than the lowest revenue of any manufacturer in Austin?,SELECT name FROM manufacturers WHERE revenue  <  (SELECT min(revenue) FROM manufacturers WHERE headquarter  =  'Austin')
+How many entrepreneurs are there?,SELECT count(*) FROM entrepreneur
+Find the ids of all distinct customers who made order after some orders that were Cancelled.,"SELECT DISTINCT customer_id FROM Customer_Orders WHERE order_date  >  (SELECT min(order_date) FROM Customer_Orders WHERE order_status_code  =  ""Cancelled"")"
+how many colorado rivers are there,"SELECT COUNT ( river_name ) FROM river WHERE river_name  =  ""colorado"";"
+How many parties are there?,SELECT count(*) FROM party
+what is the capital of the state with the highest point,SELECT t1.capital FROM highlow AS t2 JOIN state AS t1 ON t1.state_name  =  t2.state_name WHERE t2.highest_elevation  =  ( SELECT MAX ( highest_elevation ) FROM highlow );
+Which colleges does each player with a name that starts with the letter D  who tried out go to?,SELECT T1.cName FROM  tryout AS T1 JOIN player AS T2 ON T1.pID  =  T2.pID WHERE T2.pName LIKE 'D%'
+Give the songs included in volumes that have more than 1 week on top.,SELECT Song FROM volume WHERE Weeks_on_Top  >  1
+What is the stories of highest building?,SELECT Stories FROM buildings ORDER BY Height DESC LIMIT 1
+"What are the different customer ids, and how many cards does each one hold?","SELECT customer_id ,  count(*) FROM Customers_cards GROUP BY customer_id"
+Which ministers are not a part of the Progress Party?,SELECT minister FROM party WHERE party_name != 'Progress Party'
+Give me a list of descriptions of the problems that are reported by the staff whose first name is Christop.,"SELECT T1.problem_description FROM problems AS T1 JOIN staff AS T2 ON T1.reported_by_staff_id = T2.staff_id WHERE T2.staff_first_name = ""Christop"""
+Find the first names and offices of all professors sorted by alphabetical order of their first name.,"SELECT T2.emp_fname ,  T1.prof_office FROM professor AS T1 JOIN employee AS T2 ON T1.emp_num  =  T2.emp_num ORDER BY T2.emp_fname"
+Which 3 players won the most player awards? List their full name and id.,"SELECT T1.name_first ,  T1.name_last ,  T1.player_id FROM player AS T1 JOIN player_award AS T2 ON T1.player_id  =  T2.player_id GROUP BY T1.player_id ORDER BY count(*) DESC LIMIT 3;"
+What is the interaction type of the enzyme named 'ALA synthase' and the medicine named 'Aripiprazole'?,SELECT T1.interaction_type FROM medicine_enzyme_interaction AS T1 JOIN medicine AS T2 ON T1.medicine_id  =  T2.id JOIN enzyme AS T3 ON T1.enzyme_id  =  T3.id WHERE T3.name  =  'ALA synthase' AND T2.name  =  'Aripiprazole'
+What are the first names of the teachers who teach grade 1?,SELECT DISTINCT T2.firstname FROM list AS T1 JOIN teachers AS T2 ON T1.classroom  =  T2.classroom WHERE grade  =  1
+Show the id and name of the employee with maximum salary.,"SELECT eid ,  name FROM Employee ORDER BY salary DESC LIMIT 1"
+"In which distinct years was the governor ""Eliot Spitzer""?","SELECT DISTINCT YEAR FROM party WHERE Governor  =  ""Eliot Spitzer"""
+Find the file format that is used by the most files.,SELECT formats FROM files GROUP BY formats ORDER BY COUNT (*) DESC LIMIT 1
+Show the member name and hometown who registered a branch in 2016.,"SELECT T2.name ,  T2.hometown FROM membership_register_branch AS T1 JOIN member AS T2 ON T1.member_id  =  T2.member_id WHERE T1.register_year  =  2016"
+Who has friends that are younger than the average age?,SELECT DISTINCT T2.name FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name  =  T2.friend WHERE T1.age  <  (SELECT avg(age) FROM person)
+Return the name of the organization which has the most contact individuals.,SELECT t1.organization_name FROM organizations AS t1 JOIN organization_contact_individuals AS t2 ON t1.organization_id  =  t2.organization_id GROUP BY t1.organization_name ORDER BY count(*) DESC LIMIT 1
+What is the total number of students?,SELECT count(*) FROM Student
+List the names of mountains that do not have any climber.,SELECT Name FROM mountain WHERE Mountain_ID NOT IN (SELECT Mountain_ID FROM climber)
+What are the wines that have prices higher than 50 and made of Red color grapes?,"SELECT T2.Name FROM Grapes AS T1 JOIN WINE AS T2 ON T1.Grape  =  T2.Grape WHERE T1.Color  =  ""Red"" AND T2.price  >  50"
+"What are the maximum, minimum, and average booked count for the products booked?","SELECT max(booked_count) ,  min(booked_count) ,  avg(booked_count) FROM products_booked"
+What are the ids of all students who are not video game players?,SELECT StuID FROM Student EXCEPT SELECT StuID FROM Plays_games
+What are the names of all airports in Cuba or Argentina?,SELECT name FROM airports WHERE country  =  'Cuba' OR country  =  'Argentina'
+Find the name of songs that does not have a back vocal.,"SELECT DISTINCT title FROM vocals AS t1 JOIN songs AS t2 ON t1.songid  =  t2.songid EXCEPT SELECT t2.title FROM vocals AS t1 JOIN songs AS t2 ON t1.songid  =  t2.songid WHERE TYPE  =  ""back"""
+What are the id and name of the stations that have ever had more than 12 bikes available?,"SELECT DISTINCT T1.id ,  T1.name FROM station AS T1 JOIN status AS T2 ON T1.id  =  T2.station_id WHERE T2.bikes_available  >  12"
+Which directors had a movie both in the year 1999 and 2000?,SELECT director FROM movie WHERE YEAR  =  2000 INTERSECT SELECT director FROM movie WHERE YEAR  =  1999
+Find the number of dorms that have some amenity.,SELECT count(DISTINCT dormid) FROM has_amenity
+Return the official native languages of countries who have players from Maryland or Duke colleges.,"SELECT T1.Official_native_language FROM country AS T1 JOIN match_season AS T2 ON T1.Country_id  =  T2.Country WHERE T2.College  =  ""Maryland"" OR T2.College  =  ""Duke"""
+"For each player, show the team and the location of school they belong to.","SELECT T1.Team ,  T2.Location FROM player AS T1 JOIN school AS T2 ON T1.School_ID  =  T2.School_ID"
+How many body builders are there?,SELECT count(*) FROM body_builder
+"Hom many albums does the artist ""Metallica"" have?","SELECT COUNT(*) FROM ALBUM AS T1 JOIN ARTIST AS T2 ON T1.ArtistId  =  T2.ArtistId WHERE T2.Name  =  ""Metallica"""
+What are the different types of video games?,SELECT DISTINCT gtype FROM Video_games
+Give the distinct headquarters of manufacturers.,SELECT DISTINCT headquarter FROM manufacturers
+Count the number of exhibitions that have had an attendnance of over 100 or a ticket prices under 10.,SELECT count(*) FROM exhibition_record AS T1 JOIN exhibition AS T2 ON T1.exhibition_id  =  T2.exhibition_id WHERE T1.attendance  >  100 OR T2.ticket_price  <  10
+Which countries have more than one mountain?,SELECT Country FROM mountain GROUP BY Country HAVING COUNT(*)  >  1
+"Find the enrollment date for all the tests that have ""Pass"" result.","SELECT T1.date_of_enrolment FROM Student_Course_Enrolment AS T1 JOIN Student_Tests_Taken AS T2 ON T1.registration_id  =  T2.registration_id WHERE T2.test_result  =  ""Pass"""
+List roles that have more than one employee. List the role description and number of employees.,"SELECT Roles.role_description , count(Employees.employee_id) FROM ROLES JOIN Employees ON Employees.role_code = Roles.role_code GROUP BY Employees.role_code HAVING count(Employees.employee_id)  >  1;"
+Show all allergies with number of students affected.,"SELECT Allergy ,  count(*) FROM Has_allergy GROUP BY Allergy"
+Show the number of documents with document type code CV or BK.,"SELECT count(*) FROM All_documents WHERE document_type_code  =  ""CV"" OR document_type_code  =  ""BK"""
+Find the distinct number of president votes.,SELECT count(DISTINCT President_Vote) FROM VOTING_RECORD
+Find the name of persons who are friends with Alice for the shortest years.,SELECT name FROM PersonFriend WHERE friend =  'Alice' AND YEAR  =  (SELECT min(YEAR) FROM PersonFriend WHERE friend =  'Alice')
+What are the names of the tourist attractions Vincent and Marcelle visit?,"SELECT T1.Name FROM Tourist_Attractions AS T1 JOIN VISITORS AS T2 JOIN VISITS AS T3 ON T1.Tourist_Attraction_ID  =  T3.Tourist_Attraction_ID AND T2.Tourist_ID  =  T3.Tourist_ID WHERE T2.Tourist_Details  =  ""Vincent"" INTERSECT SELECT T1.Name FROM Tourist_Attractions AS T1 JOIN VISITORS AS T2 JOIN VISITS AS T3 ON T1.Tourist_Attraction_ID  =  T3.Tourist_Attraction_ID AND T2.Tourist_ID  =  T3.Tourist_ID WHERE T2.Tourist_Details  =  ""Marcelle"""
+What is the complete description of the job of a researcher?,SELECT role_description FROM Staff_Roles WHERE role_code  =  'researcher'
+What is the list of school locations sorted in descending order of school foundation year?,SELECT LOCATION FROM school ORDER BY Founded DESC
+Find the title of course that is provided by Statistics but not Psychology departments.,SELECT title FROM course WHERE dept_name  =  'Statistics' EXCEPT SELECT title FROM course WHERE dept_name  =  'Psychology'
+What is the carrier of the most expensive phone?,SELECT Carrier FROM phone ORDER BY Price DESC LIMIT 1
+"Which order's shipment tracking number is ""3452""? Give me the id of the order.","SELECT order_id FROM shipments WHERE shipment_tracking_number = ""3452"""
+Count the number of total papers.,SELECT count(*) FROM papers
+Show the first names and last names of customers without any account.,"SELECT customer_first_name ,  customer_last_name FROM Customers EXCEPT SELECT T1.customer_first_name ,  T1.customer_last_name FROM Customers AS T1 JOIN Accounts AS T2 ON T1.customer_id  =  T2.customer_id"
+Find the ids of the problems reported after 1978-06-26.,"SELECT problem_id FROM problems WHERE date_problem_reported > ""1978-06-26"""
+Find the number of routes that have destination John F Kennedy International Airport.,SELECT count(*) FROM airports AS T1 JOIN routes AS T2 ON T1.apid  =  T2.dst_apid WHERE T1.name  =  'John F Kennedy International Airport'
+What are the staff ids and genders of all staffs whose job title is Department Manager?,"SELECT T1.staff_id ,  T1.staff_gender FROM staff AS T1 JOIN staff_department_assignments AS T2 ON T1.staff_id  =  T2.staff_id WHERE T2.job_title_code  =  ""Department Manager"""
+What are the different years for all competitions that are not of type equal to tournament?,"SELECT DISTINCT YEAR FROM competition WHERE Competition_type != ""Tournament"""
+"What are the top 10 customers' first and last names with the highest gross sales, and also what are the sales?","SELECT T1.first_name ,  T1.last_name ,  SUM(T2.total) FROM customers AS T1 JOIN invoices AS T2 ON T2.customer_id  =  T1.id GROUP BY T1.id ORDER BY SUM(T2.total) DESC LIMIT 10;"
+What are the names of perpetrators?,SELECT T1.Name FROM people AS T1 JOIN perpetrator AS T2 ON T1.People_ID  =  T2.People_ID
+What are the appelations for wines produced after 2008 but not in the Central Coast area?,"SELECT Appelation FROM WINE WHERE YEAR  >  2008 EXCEPT SELECT Appelation FROM APPELLATIONS WHERE Area  =  ""Central Coast"""
+what states border kentucky,"SELECT border FROM border_info WHERE state_name  =  ""kentucky"";"
+How many accounts does the customer with first name Art and last name Turcotte have?,"SELECT count(*) FROM Accounts AS T1 JOIN Customers AS T2 ON T1.customer_id  =  T2.customer_id WHERE T2.customer_first_name  =  ""Art"" AND T2.customer_last_name  =  ""Turcotte"""
+Show the names of companies in the banking or retailing industry?,"SELECT Name FROM company WHERE Industry  =  ""Banking"" OR Industry  =  ""Retailing"""
+Find number of products which Sony does not make.,SELECT count(DISTINCT name) FROM products WHERE name NOT IN (SELECT T1.name FROM products AS T1 JOIN manufacturers AS T2 ON T1.Manufacturer  =  T2.code WHERE T2.name  =  'Sony')
+What is the first name of the students who are in age 20 to 25 and living in PHL city?,SELECT fname FROM student WHERE city_code  =  'PHL' AND age BETWEEN 20 AND 25
+Show all ministers who do not belong to Progress Party.,SELECT minister FROM party WHERE party_name != 'Progress Party'
+"What are the last names of faculty in building Barton, sorted by last name?","SELECT Lname FROM FACULTY WHERE Building  =  ""Barton"" ORDER BY Lname"
+"Show the studios that have not produced films with director ""Walter Hill"".","SELECT Studio FROM film EXCEPT SELECT Studio FROM film WHERE Director  =  ""Walter Hill"""
+Show the statement id and the statement detail for the statement with most number of accounts.,"SELECT T1.statement_id ,  T2.statement_details FROM Accounts AS T1 JOIN Statements AS T2 ON T1.statement_id  =  T2.statement_id GROUP BY T1.statement_id ORDER BY count(*) DESC LIMIT 1"
+What are the full name (first and last name) and salary for all employees who does not have any value for commission?,"SELECT first_name ,  last_name ,  salary FROM  employees WHERE commission_pct  =  ""null"""
+list in alphabetic order all course names and their instructors' names in year 2008.,"SELECT T1.title ,  T3.name FROM course AS T1 JOIN teaches AS T2 ON T1.course_id  =  T2.course_id JOIN instructor AS T3 ON T2.id  =  T3.id WHERE YEAR  =  2008 ORDER BY T1.title"
+What are the names of products with price at most 200?,SELECT name FROM products WHERE price  <=  200
+List all headquarters and the number of companies in each headquarter.,"SELECT headquarters ,  count(*) FROM company GROUP BY headquarters"
+What are the names of all clubs?,SELECT clubname FROM club
+What are the names of all movies that received 3 or 4 stars?,SELECT T2.title FROM Rating AS T1 JOIN Movie AS T2 ON T1.mID  =  T2.mID WHERE T1.stars  =  3 INTERSECT SELECT T2.title FROM Rating AS T1 JOIN Movie AS T2 ON T1.mID  =  T2.mID WHERE T1.stars  =  4
+List the physicians' employee ids together with their primary affiliation departments' ids.,"SELECT physician ,  department FROM affiliated_with WHERE primaryaffiliation  =  1"
+How much salary did the top 3 well-paid players get in 2001?,SELECT salary FROM salary WHERE YEAR  =  2001 ORDER BY salary DESC LIMIT 3;
+What are the ids and names of accounts with 4 or more transactions?,"SELECT T1.account_id ,  T2.account_name FROM Financial_transactions AS T1 JOIN Accounts AS T2 ON T1.account_id  =  T2.account_id GROUP BY T1.account_id HAVING count(*)  >=  4"
+Find the last names of teachers teaching in classroom 109.,SELECT lastname FROM teachers WHERE classroom  =  109
+How many cities are in counties that have populations of over 20000?,SELECT count(*) FROM city WHERE county_ID IN (SELECT county_ID FROM county_public_safety WHERE population  >  20000)
+display all the details from Employees table for those employees who was hired before 2002-06-21.,SELECT * FROM employees WHERE hire_date  <  '2002-06-21'
+how many degrees were conferred between 1998 and 2002?,"SELECT T1.campus ,  sum(T2.degrees) FROM campuses AS T1 JOIN degrees AS T2 ON T1.id  =  T2.campus WHERE T2.year  >=  1998 AND T2.year  <=  2002 GROUP BY T1.campus"
+Please list all album titles in alphabetical order.,SELECT Title FROM ALBUM ORDER BY Title
+What are the maximum scores the team Boston Red Stockings got when the team won in postseason?,SELECT max(T1.wins) FROM postseason AS T1 JOIN team AS T2 ON T1.team_id_winner  =  T2.team_id_br WHERE T2.name  =  'Boston Red Stockings';
+List the names of representatives that have not participated in elections listed here.,SELECT Name FROM representative WHERE Representative_ID NOT IN (SELECT Representative_ID FROM election)
+how big is new mexico,"SELECT area FROM state WHERE state_name  =  ""new mexico"";"
+Find the saving balance of the account with the highest checking balance.,SELECT T3.balance FROM accounts AS T1 JOIN checking AS T2 ON T1.custid  =  T2.custid JOIN savings AS T3 ON T1.custid  =  T3.custid ORDER BY T2.balance DESC LIMIT 1
+What are the names of customers who never made an order.,SELECT customer_name FROM customers EXCEPT SELECT t1.customer_name FROM customers AS t1 JOIN customer_orders AS t2 ON t1.customer_id  =  t2.customer_id
+Find the number of distinct gender for dorms.,SELECT count(DISTINCT gender) FROM dorm
+Show the types of schools that have two schools.,SELECT TYPE FROM school GROUP BY TYPE HAVING count(*)  =  2
+Find the last name of the first ever contact person of the organization with the highest UK Vat number.,SELECT t3.individual_last_name FROM organizations AS t1 JOIN organization_contact_individuals AS t2 ON t1.organization_id  =  t2.organization_id JOIN individuals AS t3 ON t2.individual_id  =  t3.individual_id WHERE t1.uk_vat_number  =  (SELECT max(uk_vat_number) FROM organizations) ORDER BY t2.date_contact_to ASC LIMIT 1
+How many accounts do we have?,SELECT count(*) FROM Accounts
+Show the names of climbers and the heights of mountains they climb.,"SELECT T1.Name ,  T2.Height FROM climber AS T1 JOIN mountain AS T2 ON T1.Mountain_ID  =  T2.Mountain_ID"
+"Show the minimum amount of transactions whose type code is ""PUR"" and whose share count is bigger than 50.","SELECT min(amount_of_transaction) FROM TRANSACTIONS WHERE transaction_type_code  =  ""PUR"" AND share_count  >  50"
+How many songs are there?,SELECT count(*) FROM Songs
+"Who performed the song named ""Le Pop""?","SELECT T2.firstname ,  T2.lastname FROM Performance AS T1 JOIN Band AS T2 ON T1.bandmate  =  T2.id JOIN Songs AS T3 ON T3.SongId  =  T1.SongId WHERE T3.Title  =  ""Le Pop"""
+Which channels broadcast both in the morning and at night? Give me the channel names.,SELECT t1.name FROM channel AS t1 JOIN broadcast AS t2 ON t1.channel_id  =  t2.channel_id WHERE t2.time_of_day  =  'Morning' INTERSECT SELECT t1.name FROM channel AS t1 JOIN broadcast AS t2 ON t1.channel_id  =  t2.channel_id WHERE t2.time_of_day  =  'Night'
+What campus has the most degrees  conferrred over its entire existence?,SELECT campus FROM degrees GROUP BY campus ORDER BY sum(degrees) DESC LIMIT 1
+How many students are not involved in any behavior incident?,SELECT count(*) FROM STUDENTS WHERE student_id NOT IN ( SELECT student_id FROM Behavior_Incident )
+What is the most common participant type?,SELECT participant_type_code FROM participants GROUP BY participant_type_code ORDER BY count(*) DESC LIMIT 1
+"What is the name of the artist, for each language, that has the most songs with a higher resolution than 500?",SELECT artist_name FROM song WHERE resolution  >  500 GROUP BY languages ORDER BY count(*) DESC LIMIT 1
+Find the catalog publisher that has the most catalogs.,SELECT catalog_publisher FROM catalogs GROUP BY catalog_publisher ORDER BY count(*) DESC LIMIT 1
+Show all member names and registered branch names sorted by register year.,"SELECT T3.name ,  T2.name FROM membership_register_branch AS T1 JOIN branch AS T2 ON T1.branch_id  =  T2.branch_id JOIN member AS T3 ON T1.member_id  =  T3.member_id ORDER BY T1.register_year"
+Count the number of users that are logged in.,SELECT count(*) FROM users WHERE user_login  =  1
+"What are the titles of the books whose writer is not ""Elaine Lee""?","SELECT Title FROM book WHERE Writer != ""Elaine Lee"""
+What is the count of aircrafts that have a distance between 1000 and 5000?,SELECT count(*) FROM Aircraft WHERE distance BETWEEN 1000 AND 5000
+Find the name and age of the person who is a friend of Dan or Alice.,"SELECT DISTINCT T1.name ,  T1.age FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name  =  T2.name WHERE T2.friend  =  'Dan' OR T2.friend  =  'Alice'"
+What are the names of all instructors in the Comp. Sci. department?,SELECT name FROM instructor WHERE dept_name  =  'Comp. Sci.'
+Find all the order items whose product id is 11. What are the order item ids?,SELECT order_item_id FROM order_items WHERE product_id = 11
+How many accounts does each customer have? List the number and customer id.,"SELECT count(*) ,  customer_id FROM Accounts GROUP BY customer_id"
+"Find the names of swimmers who has a result of ""win"".",SELECT t1.name FROM swimmer AS t1 JOIN record AS t2 ON t1.id  =  t2.swimmer_id WHERE RESULT  =  'Win'
+how many major cities are in states bordering nebraska,"SELECT COUNT ( city_name ) FROM city WHERE population  >  150000 AND state_name IN ( SELECT border FROM border_info WHERE state_name  =  ""nebraska"" );"
+What are the payment method codes that have been used by more than 3 parties?,SELECT payment_method_code FROM parties GROUP BY payment_method_code HAVING count(*)  >  3
+Find the name and partition id for users who tweeted less than twice.,"SELECT T1.name ,  T1.partitionid FROM user_profiles AS T1 JOIN tweets AS T2 ON T1.uid  =  T2.uid GROUP BY T2.uid HAVING count(*)  <  2"
+what is the tallest mountain in america,SELECT mountain_name FROM mountain WHERE mountain_altitude  =  ( SELECT MAX ( mountain_altitude ) FROM mountain );
+Return the dates of birth for entrepreneurs who have either the investor Simon Woodroffe or Peter Jones.,"SELECT T2.Date_of_Birth FROM entrepreneur AS T1 JOIN people AS T2 ON T1.People_ID  =  T2.People_ID WHERE T1.Investor  =  ""Simon Woodroffe"" OR T1.Investor  =  ""Peter Jones"""
+"What are the country names, area and population which has both roller coasters with speed higher","SELECT T1.name ,  T1.area ,  T1.population FROM country AS T1 JOIN roller_coaster AS T2 ON T1.Country_ID  =  T2.Country_ID WHERE T2.speed  >  60 INTERSECT SELECT T1.name ,  T1.area ,  T1.population FROM country AS T1 JOIN roller_coaster AS T2 ON T1.Country_ID  =  T2.Country_ID WHERE T2.speed  <  55"
+What are the purchase details of transactions with amount bigger than 10000?,SELECT T1.purchase_details FROM PURCHASES AS T1 JOIN TRANSACTIONS AS T2 ON T1.purchase_transaction_id  =  T2.transaction_id WHERE T2.amount_of_transaction  >  10000
+What are the names and genders of all artists who released songs in the month of March?,"SELECT T1.artist_name ,  T1.gender FROM artist AS T1 JOIN song AS T2 ON T1.artist_name  =  T2.artist_name WHERE T2.releasedate LIKE ""%Mar%"""
+where is the lowest point in iowa,"SELECT lowest_point FROM highlow WHERE state_name  =  ""iowa"";"
+Whah are the name of each industry and the number of companies in that industry?,"SELECT Industry ,  COUNT(*) FROM Companies GROUP BY Industry"
+List the titles of books that are not published.,SELECT Title FROM book WHERE Book_ID NOT IN (SELECT Book_ID FROM publication)
+Show the name of the party that has at least two records.,SELECT Party FROM party GROUP BY Party HAVING COUNT(*)  >=  2
+Find the names of products that were bought by at least two distinct customers.,SELECT DISTINCT T3.product_name FROM customer_orders AS T1 JOIN order_items AS T2 ON T1.order_id  =  T2.order_id JOIN products AS T3 ON T2.product_id  =  T3.product_id GROUP BY T3.product_id HAVING COUNT (DISTINCT T1.customer_id)  >=  2
+What are the allergies and their types?,"SELECT allergy ,  allergytype FROM Allergy_type"
+What are the ids of all students who played video games and sports?,SELECT StuID FROM Sportsinfo INTERSECT SELECT StuID FROM Plays_games
+what is the population density of the smallest state,SELECT density FROM state WHERE area  =  ( SELECT MIN ( area ) FROM state );
+Find the last names of the teachers that teach fifth grade.,SELECT DISTINCT T2.lastname FROM list AS T1 JOIN teachers AS T2 ON T1.classroom  =  T2.classroom WHERE grade  =  5
+Find the names of the artists who are from UK and have produced English songs.,"SELECT artist_name FROM artist WHERE country  =  ""UK"" INTERSECT SELECT artist_name FROM song WHERE languages  =  ""english"""
+"What are the codes and names for all regions, sorted by codes?","SELECT region_code ,  region_name FROM region ORDER BY region_code"
+"Show the apartment type code that has the largest number of total rooms, together with the number of bathrooms and number of bedrooms.","SELECT apt_type_code ,  bathroom_count ,  bedroom_count FROM Apartments GROUP BY apt_type_code ORDER BY sum(room_count) DESC LIMIT 1"
+What is the phone number of the customer who has filed the most recent complaint?,SELECT t1.phone_number FROM customers AS t1 JOIN complaints AS t2 ON t1.customer_id  =  t2.customer_id ORDER BY t2.date_complaint_raised DESC LIMIT 1
+Give me the names and prices of furnitures which some companies are manufacturing.,"SELECT t1.name ,  t2.price_in_dollar FROM furniture AS t1 JOIN furniture_manufacte AS t2 ON t1.Furniture_ID  =  t2.Furniture_ID"
+Show the name of cities in the county that has the largest number of police officers.,SELECT name FROM city WHERE county_ID  =  (SELECT county_ID FROM county_public_safety ORDER BY Police_officers DESC LIMIT 1)
+What are the ids of the courses that are registered or attended by the student whose id is 121?,SELECT course_id FROM student_course_registrations WHERE student_id = 121 UNION SELECT course_id FROM student_course_attendance WHERE student_id = 121
+What is the name and open year for the branch with most number of memberships registered in 2016?,"SELECT T2.name ,  T2.open_year FROM membership_register_branch AS T1 JOIN branch AS T2 ON T1.branch_id  =  T2.branch_id WHERE T1.register_year  =  2016 GROUP BY T2.branch_id ORDER BY count(*) DESC LIMIT 1"
+What details are there on the research staff? List the result in ascending alphabetical order.,SELECT staff_details FROM Research_Staff ORDER BY staff_details ASC
+What are the prices of products that have never gotten a complaint?,SELECT product_price FROM products WHERE product_id NOT IN (SELECT product_id FROM complaints)
+What are the products with the maximum page size eqal to A4 or a pages per minute color less than 5?,"SELECT product FROM product WHERE max_page_size  =  ""A4"" OR pages_per_minute_color  <  5"
+Show different locations of railways along with the corresponding number of railways at each location.,"SELECT LOCATION ,  COUNT(*) FROM railway GROUP BY LOCATION"
+"Show institution types, along with the number of institutions and total enrollment for each type.","SELECT TYPE ,  count(*) ,  sum(enrollment) FROM institution GROUP BY TYPE"
+Display all the information about the department Marketing.,SELECT * FROM  departments WHERE department_name  =  'Marketing'
+Give the city that the student whose family name is Kim lives in.,"SELECT city_code FROM Student WHERE LName  =  ""Kim"""
+"What are the type come, name, and description of the document that has either the name 'Noel CV' or 'King Book'?","SELECT document_type_code ,  document_name ,  document_description FROM Documents WHERE document_name  =  'Noel CV' OR document_name  =  'King Book'"
+what is the biggest city in the smallest state,SELECT city_name FROM city WHERE population  =  ( SELECT MAX ( population ) FROM city WHERE state_name IN ( SELECT state_name FROM state WHERE area  =  ( SELECT MIN ( area ) FROM state ) ) ) AND state_name IN ( SELECT state_name FROM state WHERE area  =  ( SELECT MIN ( area ) FROM state ) );
+Show all artist names who didn't have an exhibition in 2004.,SELECT name FROM artist EXCEPT SELECT T2.name FROM exhibition AS T1 JOIN artist AS T2 ON T1.artist_id  =  T2.artist_id WHERE T1.year  =  2004
+give me all the states of usa,SELECT state_name FROM state;
+What are the invoice numbers created before 1989-09-03 or after 2007-12-25?,"SELECT invoice_number FROM invoices WHERE invoice_date < ""1989-09-03"" OR invoice_date > ""2007-12-25"""
+How many games has each stadium held?,"SELECT T1.id ,  count(*) FROM stadium AS T1 JOIN game AS T2 ON T1.id  =  T2.stadium_id GROUP BY T1.id"
+What are the majors only less than three students are studying?,SELECT Major FROM STUDENT GROUP BY Major HAVING COUNT(*)  <  3
+Return the names of products that have had complaints filed by the customer who has filed the fewest complaints.,SELECT DISTINCT t1.product_name FROM products AS t1 JOIN complaints AS t2 ON t1.product_id  =  t2.product_id JOIN customers AS t3 GROUP BY t3.customer_id ORDER BY count(*) LIMIT 1
+"What are the phone numbers of customers using the policy with the code ""Life Insurance""?","SELECT customer_phone FROM available_policies WHERE policy_type_code  =  ""Life Insurance"""
+Find the title of the course that is offered by more than one department.,SELECT title FROM course GROUP BY title HAVING count(*)  >  1
+What are the names of representatives with more than 10000 votes in election?,SELECT T2.Name FROM election AS T1 JOIN representative AS T2 ON T1.Representative_ID  =  T2.Representative_ID WHERE Votes  >  10000
+"What are the department names, cities, and state provinces for each department?","SELECT T1.department_name ,  T2.city ,  T2.state_province FROM departments AS T1 JOIN locations AS T2 ON T2.location_id  =  T1.location_id"
+find the program owners that have some programs in both morning and night time.,"SELECT t1.owner FROM program AS t1 JOIN broadcast AS t2 ON t1.program_id  =  t2.program_id WHERE t2.Time_of_day  =  ""Morning"" INTERSECT SELECT t1.owner FROM program AS t1 JOIN broadcast AS t2 ON t1.program_id  =  t2.program_id WHERE t2.Time_of_day  =  ""Night"""
+List all the customers in increasing order of IDs.,"SELECT customer_id ,  customer_name FROM customers ORDER BY customer_id ASC"
+What are the names of the tracks that are Rock or Jazz songs?,"SELECT T2.name FROM genres AS T1 JOIN tracks AS T2 ON T1.id = T2.genre_id WHERE T1.name = ""Rock"" OR T1.name = ""Jazz"""
+How many students are there?,SELECT count(*) FROM list
+Show the different nationalities and the number of journalists of each nationality.,"SELECT Nationality ,  COUNT(*) FROM journalist GROUP BY Nationality"
+Find the the name of the customers who have a loan with amount more than 3000.,SELECT T1.cust_name FROM customer AS T1 JOIN loan AS T2 ON T1.cust_id  =  T2.cust_id WHERE amount  >  3000
+What are the names of the aircraft that the least people are certified to fly?,SELECT T2.name FROM Certificate AS T1 JOIN Aircraft AS T2 ON T2.aid  =  T1.aid GROUP BY T1.aid ORDER BY count(*) DESC LIMIT 1
+What are the names of the regions in alphabetical order?,SELECT region_name FROM region ORDER BY region_name
+List the names of shops that have no devices in stock.,SELECT Shop_Name FROM shop WHERE Shop_ID NOT IN (SELECT Shop_ID FROM stock)
+Show names of shops that have more than one kind of device in stock.,SELECT T2.Shop_Name FROM stock AS T1 JOIN shop AS T2 ON T1.Shop_ID  =  T2.Shop_ID GROUP BY T1.Shop_ID HAVING COUNT(*)  >  1
+how many states border the largest state,SELECT COUNT ( border ) FROM border_info WHERE state_name  =  ( SELECT state_name FROM state WHERE area  =  ( SELECT MAX ( area ) FROM state ) );
+"For each party, return the name of the party and the number of delegates from that party.","SELECT T2.Party ,  COUNT(*) FROM election AS T1 JOIN party AS T2 ON T1.Party  =  T2.Party_ID GROUP BY T1.Party"
+How films are produced by each studio?,"SELECT Studio ,  COUNT(*) FROM film GROUP BY Studio"
+What is the total point count of the youngest gymnast?,SELECT T1.Total_Points FROM gymnast AS T1 JOIN people AS T2 ON T1.Gymnast_ID  =  T2.People_ID ORDER BY T2.Age ASC LIMIT 1
+What is employee Nancy Edwards's phone number?,"SELECT phone FROM employees WHERE first_name = ""Nancy"" AND last_name = ""Edwards"";"
+"What are the names of gymnasts, ordered by their heights ascending?",SELECT T2.Name FROM gymnast AS T1 JOIN people AS T2 ON T1.Gymnast_ID  =  T2.People_ID ORDER BY T2.Height ASC
+What are the first names and ages of all students who are playing both Football and Lacrosse?,"SELECT fname ,  age FROM Student WHERE StuID IN (SELECT StuID FROM Sportsinfo WHERE SportName  =  ""Football"" INTERSECT SELECT StuID FROM Sportsinfo WHERE SportName  =  ""Lacrosse"")"
+What is the name of the highest rated wine?,SELECT Name FROM WINE ORDER BY Score LIMIT 1
+What are the total number of credits offered by each department?,"SELECT sum(T1.crs_credit) ,  T1.dept_code FROM course AS T1 JOIN CLASS AS T2 ON T1.crs_code  =  T2.crs_code GROUP BY T1.dept_code"
+What are the details of the student who registered for the most number of courses?,SELECT T1.student_details FROM students AS T1 JOIN student_course_registrations AS T2 ON T1.student_id = T2.student_id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1
+What is the average distance and price for all flights from LA?,"SELECT avg(distance) ,  avg(price) FROM Flight WHERE origin  =  ""Los Angeles"""
+"Display the first name, and department number for all employees whose last name is ""McEwen"".","SELECT first_name ,  department_id FROM employees WHERE last_name  =  'McEwen'"
+How many schools are there in the department?,SELECT count(DISTINCT school_code) FROM department
+What are the ids of the students who registered course statistics by order of registration date?,"SELECT T2.student_id FROM courses AS T1 JOIN student_course_registrations AS T2 ON T1.course_id = T2.course_id WHERE T1.course_name = ""statistics"" ORDER BY T2.registration_date"
+What are the durations of the longest and the shortest tracks in milliseconds?,"SELECT max(Milliseconds) ,  min(Milliseconds) FROM TRACK"
+what river flows through the most states,SELECT river_name FROM river GROUP BY ( river_name ) ORDER BY COUNT ( DISTINCT traverse ) DESC LIMIT 1;
+Find names of all students who took some course and got A or C.,"SELECT T1.stu_fname ,  T1.stu_lname FROM student AS T1 JOIN enroll AS T2 ON T1.stu_num  =  T2.stu_num WHERE T2.enroll_grade  =  'C' OR T2.enroll_grade  =  'A'"
+Give me the the customer details and id for the customers who had two or more policies but did not file any claims.,"SELECT T1.customer_details ,  T1.customer_id FROM Customers AS T1 JOIN Customer_Policies AS T2 ON T1.Customer_id  =  T2.customer_id GROUP BY T1.customer_id HAVING count(*)  >=  2 EXCEPT SELECT T1.customer_details ,  T1.customer_id FROM Customers AS T1 JOIN Customer_Policies AS T2 ON T1.Customer_id  =  T2.customer_id JOIN Claims AS T3 ON T2.policy_id  =  T3.policy_id"
+How many customers are there?,SELECT count(*) FROM Customers;
+What is the name of the aircraft that was on flight number 99?,SELECT T2.name FROM Flight AS T1 JOIN Aircraft AS T2 ON T1.aid  =  T2.aid WHERE T1.flno  =  99
+What are the ids of songs that are available in either mp4 format or have resolution above 720?,"SELECT f_id FROM files WHERE formats  =  ""mp4"" UNION SELECT f_id FROM song WHERE resolution  >  720"
+how many cities are in texas,"SELECT COUNT ( city_name ) FROM city WHERE state_name  =  ""texas"";"
+How many female people are older than 30 in our record?,SELECT count(*) FROM people WHERE is_male  =  'F' AND age  >  30
+"Show the apartment numbers of apartments with bookings that have status code both ""Provisional"" and ""Confirmed""","SELECT T2.apt_number FROM Apartment_Bookings AS T1 JOIN Apartments AS T2 ON T1.apt_id  =  T2.apt_id WHERE T1.booking_status_code  =  ""Confirmed"" INTERSECT SELECT T2.apt_number FROM Apartment_Bookings AS T1 JOIN Apartments AS T2 ON T1.apt_id  =  T2.apt_id WHERE T1.booking_status_code  =  ""Provisional"""
+Return the names and ids of customers who have TN in their address.,"SELECT customer_name ,  customer_id FROM customers WHERE customer_address LIKE ""%TN%"""
+How many artists are from Bangladesh?,"SELECT count(*) FROM artist WHERE country  =  ""Bangladesh"""
+what is the capital of the state texas,"SELECT capital FROM state WHERE state_name  =  ""texas"";"
+how large is new mexico,"SELECT area FROM state WHERE state_name  =  ""new mexico"";"
+What are the three largest cities in terms of regional population?,SELECT city FROM city ORDER BY regional_population DESC LIMIT 3
+"Show names of actors that have appeared in musical with name ""The Phantom of the Opera"".","SELECT T1.Name FROM actor AS T1 JOIN musical AS T2 ON T1.Musical_ID  =  T2.Musical_ID WHERE T2.Name  =  ""The Phantom of the Opera"""
+What is the full name of the employee who has the most customers?,"SELECT T1.first_name , T1.last_name FROM employees AS T1 JOIN customers AS T2 ON T1.id  =  T2.support_rep_id GROUP BY T1.id ORDER BY count(*) DESC LIMIT 1"
+What is the average and total capacity for all dorms who are of gender X?,"SELECT avg(student_capacity) ,  sum(student_capacity) FROM dorm WHERE gender  =  'X'"
+What is the average rating stars and title for the oldest movie?,"SELECT avg(T1.stars) ,  T2.title FROM Rating AS T1 JOIN Movie AS T2 ON T1.mID  =  T2.mID WHERE T2.year  =  (SELECT min(YEAR) FROM Movie)"
+Which catalog contents has price above 700 dollars? Show their catalog entry names and capacities.,"SELECT catalog_entry_name ,  capacity FROM Catalog_Contents WHERE price_in_dollars  >  700"
+How many engineers did each staff contact? List both the contact staff name and number of engineers contacted.,"SELECT T1.staff_name ,  count(*) FROM Staff AS T1 JOIN Engineer_Visits AS T2 ON T1.staff_id  =  T2.contact_staff_id GROUP BY T1.staff_name"
+"What is the first and last name of the artist who performed back stage for the song ""Der Kapitan""?","SELECT T2.firstname ,  T2.lastname FROM Performance AS T1 JOIN Band AS T2 ON T1.bandmate  =  T2.id JOIN Songs AS T3 ON T3.SongId  =  T1.SongId WHERE T3.Title  =  ""Der Kapitan"" AND T1.StagePosition  =  ""back"""
+What are the numbers of the shortest flights?,SELECT flno FROM Flight ORDER BY distance ASC LIMIT 3
+Show the names of the drivers without a school bus.,SELECT name FROM driver WHERE driver_id NOT IN (SELECT driver_id FROM school_bus)
+What are the minimum and maximum membership amounts for all branches that either opened in 2011 or are located in London?,"SELECT min(membership_amount) ,  max(membership_amount) FROM branch WHERE open_year  =  2011 OR city  =  'London'"
+What are the forenames and surnames of drivers who participated in the races named Australian Grand Prix but not the races named Chinese Grand Prix?,"SELECT T3.forename ,  T3.surname FROM races AS T1 JOIN results AS T2 ON T1.raceid = T2.raceid JOIN drivers AS T3 ON T2.driverid = T3.driverid WHERE T1.name = ""Australian Grand Prix"" EXCEPT SELECT T3.forename ,  T3.surname FROM races AS T1 JOIN results AS T2 ON T1.raceid = T2.raceid JOIN drivers AS T3 ON T2.driverid = T3.driverid WHERE T1.name = ""Chinese Grand Prix"""
+Show ids for all documents with budget types described as 'Government'.,"SELECT T1.document_id FROM Documents_with_expenses AS T1 JOIN Ref_Budget_Codes AS T2 ON T1.Budget_Type_code  =  T2.Budget_Type_code WHERE T2.budget_type_Description  =  ""Government"""
+Return the hometown that is most common among gymnasts.,SELECT T2.Hometown FROM gymnast AS T1 JOIN people AS T2 ON T1.Gymnast_ID  =  T2.People_ID GROUP BY T2.Hometown ORDER BY COUNT(*) DESC LIMIT 1
+What is the full name ( first name and last name ) for those employees who gets more salary than the employee whose id is 163?,"SELECT first_name ,  last_name FROM employees WHERE salary  >  (SELECT salary FROM employees WHERE employee_id = 163 )"
+Show all card type codes and the number of cards in each type.,"SELECT card_type_code ,  count(*) FROM Customers_cards GROUP BY card_type_code"
+how long is rio grande,"SELECT LENGTH FROM river WHERE river_name  =  ""rio grande"";"
+How many bookings do we have?,SELECT count(*) FROM BOOKINGS
+which is the density of the state that the largest river in the united states runs through,SELECT density FROM state WHERE state_name IN ( SELECT traverse FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river ) );
+Find the distinct Advisor of students who have treasurer votes in the spring election cycle.,"SELECT DISTINCT T1.Advisor FROM STUDENT AS T1 JOIN VOTING_RECORD AS T2 ON T1.StuID  =  T2.Treasurer_Vote WHERE T2.Election_Cycle  =  ""Spring"""
+What is the name of the media type that is least common across all tracks?,SELECT T1.Name FROM MEDIATYPE AS T1 JOIN TRACK AS T2 ON T1.MediaTypeId  =  T2.MediaTypeId GROUP BY T2.MediaTypeId ORDER BY COUNT(*) ASC LIMIT 1
+What are the details and ways to get to tourist attractions related to royal family?,"SELECT T1.Royal_Family_Details ,  T2.How_to_Get_There FROM ROYAL_FAMILY AS T1 JOIN TOURIST_ATTRACTIONS AS T2 ON T1.Royal_Family_ID  =  T2.Tourist_Attraction_ID"
+Find the name and country of origin for all artists who have release at least one song of resolution above 900.,"SELECT T1.artist_name ,  T1.country FROM artist AS T1 JOIN song AS T2 ON T1.artist_name  =  T2.artist_name WHERE T2.resolution  >  900 GROUP BY T2.artist_name HAVING count(*)  >=  1"
+What campuses are in Los Angeles county?,"SELECT campus FROM campuses WHERE county  =  ""Los Angeles"""
+What are the names of all players that got more than the average number of points?,SELECT name FROM player WHERE points  >  (SELECT avg(points) FROM player)
+How many assets does each maintenance contract contain? List the number and the contract id.,"SELECT count(*) ,  T1.maintenance_contract_id FROM Maintenance_Contracts AS T1 JOIN Assets AS T2 ON T1.maintenance_contract_id  =  T2.maintenance_contract_id GROUP BY T1.maintenance_contract_id"
+Show the names of members and the location of the performances they attended.,"SELECT T2.Name ,  T3.Location FROM member_attendance AS T1 JOIN member AS T2 ON T1.Member_ID  =  T2.Member_ID JOIN performance AS T3 ON T1.Performance_ID  =  T3.Performance_ID"
+What are the different names and ages of every friend of either Dan or alice?,"SELECT DISTINCT T1.name ,  T1.age FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name  =  T2.name WHERE T2.friend  =  'Dan' OR T2.friend  =  'Alice'"
+"What are the distinct name, location and products of the enzymes which has any 'inhibitor' interaction?","SELECT DISTINCT T1.name ,  T1.location ,  T1.product FROM enzyme AS T1 JOIN medicine_enzyme_interaction AS T2 ON T2.enzyme_id  =  T1.id WHERE T2.interaction_type  =  'inhibitor'"
+How many courses do the student whose id is 171 attend?,SELECT count(*) FROM courses AS T1 JOIN student_course_attendance AS T2 ON T1.course_id = T2.course_id WHERE T2.student_id = 171
+display the department id and the total salary for those departments which contains at least two employees.,"SELECT department_id ,  SUM(salary) FROM employees GROUP BY department_id HAVING count(*)  >=  2"
+What are the average amount purchased and value purchased for the supplier who supplies the most products.,"SELECT avg(total_amount_purchased) ,  avg(total_value_purchased) FROM Product_Suppliers WHERE supplier_id  =  (SELECT supplier_id FROM Product_Suppliers GROUP BY supplier_id ORDER BY count(*) DESC LIMIT 1)"
+what are the states that border the state with the greatest population,SELECT border FROM border_info WHERE state_name  =  ( SELECT state_name FROM state WHERE population  =  ( SELECT MAX ( population ) FROM state ) );
+What are the names of all the subjects.,SELECT subject_name FROM SUBJECTS
+Give the full name and customer id of the customer with the fewest accounts.,"SELECT T2.customer_first_name ,  T2.customer_last_name ,  T1.customer_id FROM Accounts AS T1 JOIN Customers AS T2 ON T1.customer_id  =  T2.customer_id GROUP BY T1.customer_id ORDER BY count(*) ASC LIMIT 1"
+What are the names and years released for the movies with the top 3 highest ratings?,"SELECT T2.title ,  T2.year FROM Rating AS T1 JOIN Movie AS T2 ON T1.mID  =  T2.mID ORDER BY T1.stars DESC LIMIT 3"
+Show all flight number from Los Angeles.,"SELECT flno FROM Flight WHERE origin  =  ""Los Angeles"""
+Which job titles correspond to jobs with salaries over 9000?,SELECT job_title FROM jobs WHERE min_salary  >  9000
+"Among the procedures that cost more than 1000, which were not specialized in by physician John Wen?","SELECT name FROM procedures WHERE cost  >  1000 EXCEPT SELECT T3.name FROM physician AS T1 JOIN trained_in AS T2 ON T1.employeeid  =  T2.physician JOIN procedures AS T3 ON T3.code  =  T2.treatment WHERE T1.name  =  ""John Wen"""
+what is the largest city in the smallest state in the usa,SELECT city_name FROM city WHERE population  =  ( SELECT MAX ( population ) FROM city WHERE state_name IN ( SELECT state_name FROM state WHERE area  =  ( SELECT MIN ( area ) FROM state ) ) ) AND state_name IN ( SELECT state_name FROM state WHERE area  =  ( SELECT MIN ( area ) FROM state ) );
+"What is the description of the club named ""Tennis Club""?","SELECT clubdesc FROM club WHERE clubname  =  ""Tennis Club"""
+Find the city with post code 255.,SELECT city FROM addresses WHERE zip_postcode  =  255
+How many artists are male and how many are female?,"SELECT count(*) ,  gender FROM artist GROUP BY gender"
+What are the GDP and population of the city that already served as a host more than once?,"SELECT t1.gdp ,  t1.Regional_Population FROM city AS T1 JOIN hosting_city AS T2 ON T1.city_id  =  T2.host_city GROUP BY t2.Host_City HAVING count(*)  >  1"
+"Show the ids and details of the investors who have at least two transactions with type code ""SALE"".","SELECT T2.investor_id ,  T1.Investor_details FROM INVESTORS AS T1 JOIN TRANSACTIONS AS T2 ON T1.investor_id  =  T2.investor_id WHERE T2.transaction_type_code  =  ""SALE"" GROUP BY T2.investor_id HAVING COUNT(*)  >=  2"
+Give id of the instructor who advises students in the History department.,SELECT i_id FROM advisor AS T1 JOIN student AS T2 ON T1.s_id  =  T2.id WHERE T2.dept_name  =  'History'
+"What is the latitude, longitude, city of the station from which the shortest trip started?","SELECT T1.lat ,  T1.long ,  T1.city FROM station AS T1 JOIN trip AS T2 ON T1.id  =  T2.start_station_id ORDER BY T2.duration LIMIT 1"
+List all countries of markets in descending order of number of cities.,SELECT Country FROM market ORDER BY Number_cities DESC
+Report all majors that have less than 3 students.,SELECT Major FROM STUDENT GROUP BY Major HAVING COUNT(*)  <  3
+What are the statement id and statement detail for the statement that has the most corresponding accounts?,"SELECT T1.statement_id ,  T2.statement_details FROM Accounts AS T1 JOIN Statements AS T2 ON T1.statement_id  =  T2.statement_id GROUP BY T1.statement_id ORDER BY count(*) DESC LIMIT 1"
+Retrieve the title of the paper that has the largest number of authors.,SELECT t2.title FROM authorship AS t1 JOIN papers AS t2 ON t1.paperid  =  t2.paperid WHERE t1.authorder  =  (SELECT max(authorder) FROM authorship)
+which rivers run through the state with the largest city in the us,SELECT river_name FROM river WHERE traverse IN ( SELECT state_name FROM city WHERE population  =  ( SELECT MAX ( population ) FROM city ) );
+"Please list the years of film market estimations when the market is in country ""Japan"" in descending order.","SELECT T1.Year FROM film_market_estimation AS T1 JOIN market AS T2 ON T1.Market_ID  =  T2.Market_ID WHERE T2.Country  =  ""Japan"" ORDER BY T1.Year DESC"
+Find the names of stadiums that some Australian swimmers have been to.,SELECT t4.name FROM swimmer AS t1 JOIN record AS t2 ON t1.id  =  t2.swimmer_id JOIN event AS t3 ON t2.event_id  =  t3.id JOIN stadium AS t4 ON t4.id  =  t3.stadium_id WHERE t1.nationality  =  'Australia'
+What are the ids and details for all organizations that have grants of more than 6000 dollars?,"SELECT T2.organisation_id ,  T2.organisation_details FROM Grants AS T1 JOIN Organisations AS T2 ON T1.organisation_id  =  T2.organisation_id GROUP BY T2.organisation_id HAVING sum(T1.grant_amount)  >  6000"
+What are all the distinct premise types?,SELECT DISTINCT premises_type FROM premises
+Find the total claimed amount of all the claims.,SELECT sum(Amount_Claimed) FROM Claims
+List ids for all student who are on scholarship.,SELECT StuID FROM Sportsinfo WHERE onscholarship  =  'Y'
+Find the number of students in total.,SELECT count(*) FROM list
+What is the title of the album that was released by the artist whose name has the phrase 'Led'?,SELECT T2.title FROM artists AS T1 JOIN albums AS T2 ON T1.id  =  T2.artist_id WHERE T1.name LIKE '%Led%'
+Find the number of accounts with a savings balance that is higher than the average savings balance.,SELECT count(*) FROM savings WHERE balance  >  (SELECT avg(balance) FROM savings)
+what are the last names of the teachers who teach grade 5?,SELECT DISTINCT T2.lastname FROM list AS T1 JOIN teachers AS T2 ON T1.classroom  =  T2.classroom WHERE grade  =  5
+Find the different first names and cities of the students who have allergy to milk or cat.,"SELECT DISTINCT T1.fname ,  T1.city_code FROM Student AS T1 JOIN Has_Allergy AS T2 ON T1.stuid  =  T2.stuid WHERE T2.Allergy  =  ""Milk"" OR T2.Allergy  =  ""Cat"""
+what is the area of the smallest state,SELECT area FROM state WHERE area  =  ( SELECT MIN ( area ) FROM state );
+"Show the minimum, maximum, and average age for all people.","SELECT min(age) ,  max(age) ,  avg(age) FROM people"
+How many apartment bookings are there in total?,SELECT count(*) FROM Apartment_Bookings
+What is the nickname of staff with first name as Janessa and last name as Sawayn?,"SELECT nickname FROM Staff WHERE first_name = ""Janessa"" AND last_name = ""Sawayn"";"
+Find the department name and room of the course INTRODUCTION TO COMPUTER SCIENCE.,"SELECT T2.Dname ,  T2.Room FROM COURSE AS T1 JOIN DEPARTMENT AS T2 ON T1.DNO  =  T2.DNO WHERE T1.CName  =  ""INTRODUCTION TO COMPUTER SCIENCE"""
+What are the first names of students in room 108?,SELECT firstname FROM list WHERE classroom  =  108
+What are the ids and full names of customers who hold two or more cards?,"SELECT T1.customer_id ,  T2.customer_first_name ,  T2.customer_last_name FROM Customers_cards AS T1 JOIN Customers AS T2 ON T1.customer_id  =  T2.customer_id GROUP BY T1.customer_id HAVING count(*)  >=  2"
+How many customers use each payment method?,"SELECT payment_method_code ,  count(*) FROM customers GROUP BY payment_method_code"
+List the title of films that do not have any market estimation.,SELECT Title FROM film WHERE Film_ID NOT IN (SELECT Film_ID FROM film_market_estimation)
+What are the names of the drama workshop groups with address in Feliciaberg city?,"SELECT T2.Store_Name FROM Addresses AS T1 JOIN Drama_Workshop_Groups AS T2 ON T1.Address_ID  =  T2.Address_ID WHERE T1.City_Town  =  ""Feliciaberg"""
+"Return the minimum, maximum, and average seating across all tracks.","SELECT min(seating) ,  max(seating) ,  avg(seating) FROM track"
+What are the first names of all students in course ACCT-211?,SELECT T3.stu_fname FROM CLASS AS T1 JOIN enroll AS T2 ON T1.class_code  =  T2.class_code JOIN student AS T3 ON T2.stu_num  =  T3.stu_num WHERE T1.crs_code  =  'ACCT-211'
+display all the information of employees whose salary is in the range of 8000 and 12000 and commission is not null or department number does not equal to 40.,"SELECT * FROM employees WHERE salary BETWEEN 8000 AND 12000 AND commission_pct != ""null"" OR  department_id != 40"
+How many addresses are in the district of California?,SELECT count(*) FROM address WHERE district  =  'California'
+What is the name of the body builder with the greatest body weight?,SELECT T2.Name FROM body_builder AS T1 JOIN people AS T2 ON T1.People_ID  =  T2.People_ID ORDER BY T2.Weight DESC LIMIT 1
+Find the department with the most employees.,SELECT name FROM department GROUP BY departmentID ORDER BY count(departmentID) DESC LIMIT 1;
+Find the number of people whose age is greater than all engineers.,SELECT count(*) FROM Person WHERE age  >  (SELECT max(age) FROM person WHERE job  =  'engineer')
+What are the names of parties that do not have delegates in election?,SELECT Party FROM party WHERE Party_ID NOT IN (SELECT Party FROM election)
+In how many different states are banks located?,SELECT count(DISTINCT state) FROM bank
+what states border states that border states that border states that border texas,"SELECT t1.border FROM border_info AS t2 JOIN border_info AS t1 ON t2.border  =  t1.state_name JOIN border_info AS t3 ON t3.border  =  t2.state_name JOIN border_info AS t4 ON t4.border  =  t3.state_name WHERE t4.state_name  =  ""texas"";"
+What are the different names and countries of origins for all artists whose song ratings are above 9?,"SELECT DISTINCT T1.artist_name ,  T1.country FROM artist AS T1 JOIN song AS T2 ON T1.artist_name  =  T2.artist_name WHERE T2.rating  >  9"
+Find courses that ran in Fall 2009 and in Spring 2010.,SELECT course_id FROM SECTION WHERE semester  =  'Fall' AND YEAR  =  2009 INTERSECT SELECT course_id FROM SECTION WHERE semester  =  'Spring' AND YEAR  =  2010
+Which students participate in both Canoeing and Kayaking as their activities? Tell me their student ids.,SELECT T1.stuid FROM participates_in AS T1 JOIN activity AS T2 ON T2.actid  =  T2.actid WHERE T2.activity_name  =  'Canoeing' INTERSECT SELECT T1.stuid FROM participates_in AS T1 JOIN activity AS T2 ON T2.actid  =  T2.actid WHERE T2.activity_name  =  'Kayaking'
+How many states that have some college students playing in the mid position but not in the goalie position.,SELECT COUNT(*) FROM (SELECT T1.state FROM college AS T1 JOIN tryout AS T2 ON T1.cName  =  T2.cName WHERE T2.pPos  =  'mid' EXCEPT SELECT T1.state FROM college AS T1 JOIN tryout AS T2 ON T1.cName  =  T2.cName WHERE T2.pPos  =  'goalie')
+What are the names of customers with a higher checking balance than savings balance?,SELECT T1.name FROM accounts AS T1 JOIN checking AS T2 ON T1.custid  =  T2.custid JOIN savings AS T3 ON T1.custid  =  T3.custid WHERE T2.balance  >  T3.balance
+Which staff members are assigned to the problem with id 1? Give me their first and last names.,"SELECT DISTINCT staff_first_name ,  staff_last_name FROM staff AS T1 JOIN problem_log AS T2 ON T1.staff_id = T2.assigned_to_staff_id WHERE T2.problem_id = 1"
+What is the description for the budget type with code ORG?,"SELECT budget_type_description FROM Ref_budget_codes WHERE budget_type_code  =  ""ORG"""
+List the total number of horses on farms in ascending order.,SELECT Total_Horses FROM farm ORDER BY Total_Horses ASC
+Return the full name and id of the actor or actress who starred in the greatest number of films.,"SELECT T2.first_name ,  T2.last_name ,  T2.actor_id FROM film_actor AS T1 JOIN actor AS T2 ON T1.actor_id  =  T2.actor_id GROUP BY T2.actor_id ORDER BY count(*) DESC LIMIT 1"
+Find the name of the courses that do not have any prerequisite?,SELECT title FROM course WHERE course_id NOT IN (SELECT course_id FROM prereq)
+When was the order placed whose shipment tracking number is 3452? Give me the date.,SELECT T1.date_order_placed FROM orders AS T1 JOIN shipments AS T2 ON T1.order_id = T2.order_id WHERE T2.shipment_tracking_number = 3452
+"Which department has more than 1 head at a time? List the id, name and the number of heads.","SELECT T1.department_id ,  T1.name ,  count(*) FROM management AS T2 JOIN department AS T1 ON T1.department_id  =  T2.department_id GROUP BY T1.department_id HAVING count(*)  >  1"
+"What are the last names of staff with email addressed containing the substring ""wrau""?","SELECT last_name FROM staff WHERE email_address LIKE ""%wrau%"""
+which rivers run through states bordering alabama,"SELECT river_name FROM river WHERE traverse IN ( SELECT border FROM border_info WHERE state_name  =  ""alabama"" );"
+What are the first and last name for those employees who works either in department 70 or 90?,"SELECT first_name ,  last_name FROM employees WHERE department_id  =  70 OR department_id  =  90"
+What are the average prices of products for each manufacturer?,"SELECT avg(T1.price) ,  T2.name FROM products AS T1 JOIN manufacturers AS T2 ON T1.Manufacturer  =  T2.code GROUP BY T2.name"
+What is the card type code with most number of cards?,SELECT card_type_code FROM Customers_cards GROUP BY card_type_code ORDER BY count(*) DESC LIMIT 1
+What are the birth places that are shared by at least two people?,SELECT Birth_Place FROM people GROUP BY Birth_Place HAVING COUNT(*)  >=  2
+what is the biggest capital city in the us,SELECT city_name FROM city WHERE population  =  ( SELECT MAX ( t1.population ) FROM state AS t2 JOIN city AS t1 ON t2.capital  =  t1.city_name );
+List all the distinct stations from which a trip of duration below 100 started.,SELECT DISTINCT start_station_name FROM trip WHERE duration  <  100
+What categories have two or more corresponding books that were made after 1989?,SELECT category FROM book_club WHERE YEAR  >  1989 GROUP BY category HAVING count(*)  >=  2
+How many professors do have a Ph.D. degree?,SELECT count(*) FROM professor WHERE prof_high_degree  =  'Ph.D.'
+What are the names of actors who have been in the musical titled The Phantom of the Opera?,"SELECT T1.Name FROM actor AS T1 JOIN musical AS T2 ON T1.Musical_ID  =  T2.Musical_ID WHERE T2.Name  =  ""The Phantom of the Opera"""
+Show all main industry for all companies.,SELECT DISTINCT main_industry FROM company
+What is the average fastest lap speed for the Monaco Grand Prix in 2008?,"SELECT avg(T2.fastestlapspeed) FROM races AS T1 JOIN results AS T2 ON T1.raceid = T2.raceid WHERE T1.year = 2008 AND T1.name = ""Monaco Grand Prix"""
+Return the name of the mountain with the greatest height.,SELECT Name FROM mountain ORDER BY Height DESC LIMIT 1
+What are the shortest duration and lowest rating of songs grouped by genre and ordered by genre?,"SELECT min(T1.duration) ,  min(T2.rating) ,  T2.genre_is FROM files AS T1 JOIN song AS T2 ON T1.f_id  =  T2.f_id GROUP BY T2.genre_is ORDER BY T2.genre_is"
+how large is the largest city in alaska,"SELECT population FROM city WHERE population  =  ( SELECT MAX ( population ) FROM city WHERE state_name  =  ""alaska"" ) AND state_name  =  ""alaska"";"
+How many accounts are there in total?,SELECT count(*) FROM accounts
+How many students are in each department?,"SELECT count(*) ,  dept_code FROM student GROUP BY dept_code"
+"What are all the songs in albums under label ""Universal Music Group""?","SELECT T3.title FROM albums AS T1 JOIN tracklists AS T2 ON T1.aid  =  T2.albumid JOIN songs AS T3 ON T2.songid  =  T3.songid WHERE t1.label  =  ""Universal Music Group"""
+What are the ids of the students who are not involved in any activity,SELECT StuID FROM Student EXCEPT SELECT StuID FROM Participates_in
+"What is the minimum, maximum, and average seating for all tracks.","SELECT min(seating) ,  max(seating) ,  avg(seating) FROM track"
+Count the number of different payment method codes used by parties.,SELECT count(DISTINCT payment_method_code) FROM parties
+Please show the categories of the music festivals with count more than 1.,SELECT Category FROM music_festival GROUP BY Category HAVING COUNT(*)  >  1
+"What are the name, latitude, and city of the station with the lowest latitude?","SELECT name ,  lat ,  city FROM station ORDER BY lat LIMIT 1"
+Find the country of all appelations who have at most three wines.,SELECT T1.County FROM APPELLATIONS AS T1 JOIN WINE AS T2 ON T1.Appelation  =  T2.Appelation GROUP BY T2.Appelation HAVING count(*)  <=  3
+Find the order detail for the products with price above 2000.,SELECT T1.Other_Item_Details FROM ORDER_ITEMS AS T1 JOIN Products AS T2 ON T1.Product_ID  =  T2.Product_ID WHERE T2.Product_price  >  2000
+What is the product ID of the most frequently ordered item on invoices?,SELECT Product_ID FROM INVOICES GROUP BY Product_ID ORDER BY COUNT(*) DESC LIMIT 1
+Show the name of colleges that have at least two players in descending alphabetical order.,SELECT College FROM match_season GROUP BY College HAVING count(*)  >=  2 ORDER BY College DESC
+Count the number of climbers.,SELECT count(*) FROM climber
+"What are the names of all customers, ordered by account balance?",SELECT cust_name FROM customer ORDER BY acc_bal
+How many teachers does the student named CHRISSY NABOZNY have?,"SELECT count(*) FROM list AS T1 JOIN teachers AS T2 ON T1.classroom  =  T2.classroom WHERE T1.firstname  =  ""CHRISSY"" AND T1.lastname  =  ""NABOZNY"""
+Give the title of the course offered in Chandler during the Fall of 2010.,SELECT T1.title FROM course AS T1 JOIN SECTION AS T2 ON T1.course_id  =  T2.course_id WHERE building  =  'Chandler' AND semester  =  'Fall' AND YEAR  =  2010
+What is the distinct service types that are provided by the organization which has detail 'Denesik and Sons Party'?,SELECT DISTINCT T1.service_type_code FROM services AS T1 JOIN organizations AS T2 ON T1.organization_id  =  T2.organization_id WHERE T2.organization_details  =  'Denesik and Sons Party'
+Find the id of the product ordered the most often on invoices.,SELECT Product_ID FROM INVOICES GROUP BY Product_ID ORDER BY COUNT(*) DESC LIMIT 1
+Show the names of people that are on affirmative side of debates with number of audience bigger than 200.,SELECT T3.Name FROM debate_people AS T1 JOIN debate AS T2 ON T1.Debate_ID  =  T2.Debate_ID JOIN people AS T3 ON T1.Affirmative  =  T3.People_ID WHERE T2.Num_of_Audience  >  200
+What are the product id and product type of the cheapest product?,"SELECT product_id ,  product_type_code FROM products ORDER BY product_price LIMIT 1"
+What are the three most costly procedures?,SELECT name FROM procedures ORDER BY cost LIMIT 3
+Which type of policy is most frequently used? Give me the policy type code.,SELECT policy_type_code FROM policies GROUP BY policy_type_code ORDER BY count(*) DESC LIMIT 1
+Who are the customers that had more than 1 policy? List the customer details and id.,"SELECT T1.customer_details ,  T1.customer_id FROM Customers AS T1 JOIN Customer_Policies AS T2 ON T1.Customer_id  =  T2.Customer_id GROUP BY T1.customer_id HAVING count(*)  >  1"
+What are the maximum price and score of wines in each year?,"SELECT max(Price) ,  max(Score) ,  YEAR FROM WINE GROUP BY YEAR"
+what is the city with the smallest population,SELECT city_name FROM city WHERE population  =  ( SELECT MIN ( population ) FROM city );
+what is the population density of wyoming,"SELECT density FROM state WHERE state_name  =  ""wyoming"";"
+"What is the address of the location ""UK Gallery""?","SELECT Address FROM LOCATIONS WHERE Location_Name  =  ""UK Gallery"""
+What is the type description of the organization whose detail is listed as 'quo'?,SELECT T1.organisation_type_description FROM organisation_Types AS T1 JOIN Organisations AS T2 ON T1.organisation_type  =  T2.organisation_type WHERE T2.organisation_details  =  'quo'
+What are the last name and office of all history professors?,"SELECT T1.emp_lname ,  T2.prof_office FROM employee AS T1 JOIN professor AS T2 ON T1.emp_num  =  T2.emp_num JOIN department AS T3 ON T2.dept_code  =  T3.dept_code WHERE T3.dept_name  =  'History'"
+how many states border colorado and border new mexico,"SELECT COUNT ( border ) FROM border_info WHERE border IN ( SELECT border FROM border_info WHERE state_name  =  ""new mexico"" ) AND state_name  =  ""colorado"";"
+What are the first names of all Accounting professors who teach and what are the classrooms of the courses they teach?,"SELECT T2.emp_fname ,  T1.class_room FROM CLASS AS T1 JOIN employee AS T2 ON T1.prof_num  =  T2.emp_num JOIN professor AS T3 ON T2.emp_num  =  T3.emp_num JOIN department AS T4 ON T4.dept_code  =  T3.dept_code WHERE T4.dept_name  =  'Accounting'"
+How many tourists did not make any visit?,SELECT count(*) FROM Visitors WHERE Tourist_ID NOT IN ( SELECT Tourist_ID FROM Visits )
+What are the origins of all flights that are headed to Honolulu?,"SELECT origin FROM Flight WHERE destination  =  ""Honolulu"""
+Find all the zip codes in which the max dew point have never reached 70.,SELECT DISTINCT zip_code FROM weather EXCEPT SELECT DISTINCT zip_code FROM weather WHERE max_dew_point_f  >=  70
+Count the number of regions.,SELECT count(*) FROM region
+Find the common personal name of course authors and students.,SELECT personal_name FROM Course_Authors_and_Tutors INTERSECT SELECT personal_name FROM Students
+"Show the studios that have produced films with director ""Nicholas Meyer"" and ""Walter Hill"".","SELECT Studio FROM film WHERE Director  =  ""Nicholas Meyer"" INTERSECT SELECT Studio FROM film WHERE Director  =  ""Walter Hill"""
+what is the capital of texas,"SELECT capital FROM state WHERE state_name  =  ""texas"";"
+How many types of products have Rodrick Heaney bought in total?,"SELECT count(DISTINCT t3.product_id) FROM customers AS t1 JOIN customer_orders AS t2 ON t1.customer_id  =  t2.customer_id JOIN order_items AS t3 ON t2.order_id  =  t3.order_id WHERE t1.customer_name  =  ""Rodrick Heaney"""
+Find the name of scientists who are assigned to some project.,SELECT T2.name FROM assignedto AS T1 JOIN scientists AS T2 ON T1.scientist  =  T2.ssn
+"Among all the claims, what is the amount claimed in the claim with the least amount settled? List both the settlement amount and claim amount.","SELECT Amount_Settled ,  Amount_Claimed FROM Claims ORDER BY Amount_Settled ASC LIMIT 1"
+what is the highest point of the state with the smallest population density,SELECT highest_point FROM highlow WHERE state_name IN ( SELECT state_name FROM state WHERE density  =  ( SELECT MIN ( density ) FROM state ) );
+"List the enrollment for each school that does not have ""Catholic"" as denomination.","SELECT Enrollment FROM school WHERE Denomination != ""Catholic"""
+"What are all the addresses in East Julianaside, Texas or in Gleasonmouth, Arizona.","SELECT address_content FROM addresses WHERE city  =  ""East Julianaside"" AND state_province_county  =  ""Texas"" UNION SELECT address_content FROM addresses WHERE city  =  ""Gleasonmouth"" AND state_province_county  =  ""Arizona"""
+"What are the white percentages of cities, and the corresponding crime rates of the counties they correspond to?","SELECT T1.White ,  T2.Crime_rate FROM city AS T1 JOIN county_public_safety AS T2 ON T1.County_ID  =  T2.County_ID"
+List the themes of parties in ascending order of number of hosts.,SELECT Party_Theme FROM party ORDER BY Number_of_hosts ASC
+What are the unit of measure and category code for the 'chervil' product?,"SELECT t2.unit_of_measure ,  t2.product_category_code FROM products AS t1 JOIN ref_product_categories AS t2 ON t1.product_category_code  =  t2.product_category_code WHERE t1.product_name  =  ""chervil"""
+Show the average population of all counties.,SELECT avg(Population) FROM county
+"What is the average age of the members of the club ""Bootup Baltimore""?","SELECT avg(t3.age) FROM club AS t1 JOIN member_of_club AS t2 ON t1.clubid  =  t2.clubid JOIN student AS t3 ON t2.stuid  =  t3.stuid WHERE t1.clubname  =  ""Bootup Baltimore"""
+What are the grade number and classroom number of each class in the list?,"SELECT DISTINCT classroom ,  grade FROM list"
+"How many musicians play in the song ""Flash""?","SELECT count(*) FROM performance AS T1 JOIN band AS T2 ON T1.bandmate  =  T2.id JOIN songs AS T3 ON T3.songid  =  T1.songid WHERE T3.Title  =  ""Flash"""
+"Return the weights of entrepreneurs, ordered descending by amount of money requested.",SELECT T2.Weight FROM entrepreneur AS T1 JOIN people AS T2 ON T1.People_ID  =  T2.People_ID ORDER BY T1.Money_Requested DESC
+What are the names of every person who has a friend over 40 and under 30?,SELECT T1.name FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name  =  T2.name WHERE T2.friend IN (SELECT name FROM Person WHERE age  >  40) INTERSECT SELECT T1.name FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name  =  T2.name WHERE T2.friend IN (SELECT name FROM Person WHERE age  <  30)
