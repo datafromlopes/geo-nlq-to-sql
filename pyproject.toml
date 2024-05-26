@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "text-to-sql"
+version = "0.1.0"
+description = "Text-to-SQL is a project to translate geospacial query to SQL code"
+authors = ["Diego Lopes <oliveira.diegolopes@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+numpy = "^1.26.4"
+scikit-learn = "^1.5.0"
+torch = "^2.3.0"
+pandas = "^2.2.2"
+transformers = "^4.41.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

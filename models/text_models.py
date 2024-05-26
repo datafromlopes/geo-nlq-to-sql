@@ -1,66 +1,28 @@
-from transformers import T5Tokenizer, T5ForConditionalGeneration  # T5 Model
-from transformers import LlamaTokenizer, LlamaForCausalLM         # LLAMA Model
-from transformers import AutoModelForCausalLM                     # GPT2 Model
-from transformers import BertModel, BertTokenizer                 # BERT Model
-from transformers import AutoTokenizer                            # Tokenizer for GPT2 and BERT Models
-from transformers import TrainingArguments
-from transformers import Trainer
-from utils.utils import Metrics
 import torch
+import torch.nn as nn
 
 
-class TextToSql:
-    def __init__(self, model_name, device="mps", num_labels=1):
-        match model_name:
-            case 't5-base':
-                model = f"google-t5/{model_name}"
-                self.__tokenizer = T5Tokenizer.from_pretrained(model)
-                self.__model = T5ForConditionalGeneration.from_pretrained(model, num_labels=num_labels).to(device)
-            case 'bert-base-cased':
-                model = f"google-bert/{model_name}"
-                self.__tokenizer = BertTokenizer.from_pretrained(model)
-                self.__model = BertModel.from_pretrained(model, num_labels=num_labels).to(device)
-            case 'bert-base-portuguese-cased':
-                model_path = f"neuralmind/{model_name}"
-                self.__tokenizer = AutoTokenizer.from_pretrained(model_path)
-                self.__model = BertModel.from_pretrained(model_path)
-            case 'Llama-2-7b-hf':
-                model_path = f"meta-llama/{model_name}"
-                self.__tokenizer = LlamaTokenizer.from_pretrained(model_path)
-                self.__model = LlamaForCausalLM.from_pretrained(model_path)
-            case 'gpt2':
-                self.__tokenizer = AutoTokenizer.from_pretrained(model_name)
-                self.__model = AutoModelForCausalLM.from_pretrained(model_name)
+class TextToSql(nn.Module):
+    def __init__(self, input_dim, embedding_dim, hidden_dim, output_dim, n_layers, bidirectional, dropout):
+        super(TextToSql, self).__init__()
 
-    def tokenize(self, texts, return_tensors="pt"):
-        encodings = self.__tokenizer(
-            list(texts),
-            truncation=True,
-            padding='max_length',
-            return_tensors=return_tensors,
-            add_special_tokens=True
-        )
-        return encodings
+        self.embedding = nn.Embedding(input_dim, embedding_dim)
+        self.lstm = nn.LSTM(embedding_dim,
+                            hidden_dim,
+                            num_layers=n_layers,
+                            bidirectional=bidirectional,
+                            dropout=dropout)
 
-    def trainer(self, train_dataset, test_dataset):
-        metrics = Metrics()
-        training_args = TrainingArguments(
-            output_dir='./results',
-            num_train_epochs=5,
-            per_device_train_batch_size=128,
-            per_device_eval_batch_size=128,
-            save_total_limit=10,
-            load_best_model_at_end=True,
-            evaluation_strategy="epoch",
-            save_strategy="epoch",
-        )
+        self.fc = nn.Linear(hidden_dim * 2 if bidirectional else hidden_dim, output_dim)
+        self.dropout = nn.Dropout(dropout)
 
-        trainer = Trainer(
-            model=self.__model,
-            args=training_args,
-            train_dataset=train_dataset,
-            eval_dataset=test_dataset,
-            compute_metrics=metrics.compute_metrics,
-        )
+    def forward(self, text):
+        embedded = self.dropout(self.embedding(text))
+        outputs, (hidden, cell) = self.lstm(embedded)
 
-        return trainer
+        if self.lstm.bidirectional:
+            hidden = self.dropout(torch.cat((hidden[-2, :, :], hidden[-1, :, :]), dim=1))
+        else:
+            hidden = self.dropout(hidden[-1, :, :])
+
+        return self.fc(hidden)

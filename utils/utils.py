@@ -1,24 +1,27 @@
 from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances
-from scipy.spatial import distance
 from scipy.special import kl_div
 from scipy.stats import pearsonr
 import numpy as np
 import torch
+from torch.utils.data import Dataset
 
 
-class MakeTorchData(torch.utils.data.Dataset):
-    def __init__(self, encodings, labels):
-        self.encodings = encodings
+class CustomDataset(Dataset):
+    def __init__(self, input_ids, attention_mask, labels):
+        self.input_ids = input_ids
+        self.attention_mask = attention_mask
         self.labels = labels
 
     def __getitem__(self, idx):
-        item = {k: torch.tensor(v[idx]) for k, v in self.encodings.items()}
-        item["labels"] = float(self.labels[idx])
+        item = {
+            'input_ids': self.input_ids[idx],
+            'attention_mask': self.attention_mask[idx],
+            'labels': self.labels[idx]
+        }
         return item
 
     def __len__(self):
         return len(self.labels)
-
 
 class Metrics:
 
@@ -45,3 +48,4 @@ class Metrics:
             "pearson_correlation": pearson_corr,
             "kl_divergence": np.mean(kl_divergence)
         }
+
