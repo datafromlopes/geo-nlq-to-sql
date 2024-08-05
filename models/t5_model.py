@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from transformers import T5ForConditionalGeneration, T5Tokenizer, Trainer, TrainingArguments
-from utils.utils import CustomDataset, Metrics
+from utils.models_utils import CustomDataset, Metrics
 
 DATASET = "/Users/diegolopes/Repositories/ms-usp-text-to-sql/data/geo_dataset.csv"
 DEVICE = "mps"
