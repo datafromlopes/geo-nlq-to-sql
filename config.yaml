@@ -1,0 +1,5 @@
+dataset:
+  base_name: base_dataset
+  name: dataset
+  type: parquet
+  path: data
