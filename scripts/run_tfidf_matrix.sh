@@ -12,20 +12,7 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-import polars as pl
-from .global_variables import BASE_DATASET_FULL_NAME, DATASET_FULL_NAME
+#!/bin/bash
 
-
-def get_dataset(base_dataset=False):
-    """Get the dataset.
-
-    Arguments:
-        base_dataset (bool, optional): if True, returns the base dataset. Default is False.
-
-    Returns:
-        pl.LazyFrame: Porlars LazyFrame
-    """
-
-    if base_dataset:
-        return pl.scan_parquet(BASE_DATASET_FULL_NAME)
-    return pl.scan_parquet(DATASET_FULL_NAME)
+cd "$(dirname "$0")/.."
+python3 -m text_processor.tfidf_matrix
