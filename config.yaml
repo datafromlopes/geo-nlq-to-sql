@@ -1,7 +1,10 @@
 dataset:
-  name: dataset
+  base: base_dataset
+  full: geo_dataset
   type: parquet
-  path: data
-  tf_idf_matrix_name: tf_idf_sparse_matrix
-  tf_idf_matrix_type: npz
-
+tf_idf_matrix:
+  name: tf_idf_sparse_matrix
+  type: npz
+tf_idf_features:
+  name: features
+  type: parquet

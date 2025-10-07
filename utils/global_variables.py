@@ -21,11 +21,9 @@ CONFIG_PATH = PROJECT_ROOT / "config.yaml"
 with open(CONFIG_PATH, 'r') as f:
     config = yaml.safe_load(f)
 
-dataset_name = config["dataset"]["name"]
-dataset_type = config["dataset"]["type"]
-dataset_path = PROJECT_ROOT / config["dataset"]["path"]
-tfidf_matrix_name = config["dataset"]["tf_idf_matrix_name"]
-tf_idf_matrix_type = config["dataset"]["tf_idf_matrix_type"]
+DATASET_TYPE =  config["dataset"]["type"]
+DATASET_FULL_NAME = f"{PROJECT_ROOT}/data/{config['dataset']['full']}"
+BASE_DATASET_FULL_NAME = f"{PROJECT_ROOT}/data/{config['dataset']['base']}.{config['dataset']['type']}"
 
-DATASET_FULL_NAME = f"{dataset_path}/{dataset_name}.{dataset_type}"
-TF_IDF_MATRIX_FULL_NAME = f"{dataset_path}/{tfidf_matrix_name}.{tf_idf_matrix_type}"
+TF_IDF_MATRIX_NAME = f"{PROJECT_ROOT}/data/{config['tf_idf_matrix']['name']}.{config['tf_idf_matrix']['type']}"
+TF_IDF_FEATURES_NAME = f"{PROJECT_ROOT}/data/{config['tf_idf_features']['name']}.{config['tf_idf_features']['type']}"

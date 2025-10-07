@@ -30,8 +30,8 @@ def get_tfidf_matrix(lazy_frame: LazyFrame) -> tuple:
     return sparse_matrix, features
 
 def main(argv):
-    data = get_dataset()
-    sparse_matrix, features = get_tfidf_matrix(data)
+    docs = get_dataset()
+    sparse_matrix, features = get_tfidf_matrix(docs)
     df_features = DataFrame({'features': features})
 
     df_features.write_parquet(f"{PROJECT_ROOT}/data/features.parquet")

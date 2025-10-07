@@ -12,7 +12,7 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-from .dataset import get_dataset, get_tfidf_matrix
+from .utils import get_dataset, get_tfidf_matrix
 from .global_variables import (
     PROJECT_ROOT,
     CONFIG_PATH,
