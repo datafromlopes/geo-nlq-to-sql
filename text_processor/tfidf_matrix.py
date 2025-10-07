@@ -15,31 +15,27 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 from utils import get_dataset
 from polars import LazyFrame, DataFrame
-import polars as pl
+from scipy.sparse import save_npz
 from utils import PROJECT_ROOT
 from absl import app
 
 
-def get_tfidf_matrix(lazy_frame: LazyFrame) -> DataFrame:
+def get_tfidf_matrix(lazy_frame: LazyFrame) -> tuple:
     corpus = lazy_frame.collect()['question'].to_list()
 
-    vectorizer = TfidfVectorizer(stop_words=['?'])
-    tfidf_matrix = vectorizer.fit_transform(corpus)
-    feature_names = vectorizer.get_feature_names_out()
-    scores = tfidf_matrix.sum(axis=0).A1
+    vectorizer = TfidfVectorizer()
+    sparse_matrix = vectorizer.fit_transform(corpus)
+    features = vectorizer.get_feature_names_out()
 
-    df = pl.DataFrame({
-        "feature_names": feature_names,
-        "score": scores
-    })
-
-    return df
+    return sparse_matrix, features
 
 def main(argv):
     data = get_dataset()
-    dataframe = get_tfidf_matrix(data)
+    sparse_matrix, features = get_tfidf_matrix(data)
+    df_features = DataFrame({'features': features})
 
-    dataframe.write_parquet(f"{PROJECT_ROOT}/data/tfidf_matrix.parquet")
+    df_features.write_parquet(f"{PROJECT_ROOT}/data/features.parquet")
+    save_npz(f"{PROJECT_ROOT}/data/sparse_matrix.npz", sparse_matrix)
 
 
 if __name__ == '__main__':

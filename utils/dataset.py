@@ -13,10 +13,11 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 import polars as pl
-from .global_variables import BASE_DATASET_FULL_NAME, DATASET_FULL_NAME
+from scipy.sparse import load_npz, csr_matrix
+from .global_variables import DATASET_FULL_NAME, TF_IDF_MATRIX_FULL_NAME
 
 
-def get_dataset(base_dataset=False):
+def get_dataset(base_dataset=False) -> pl.LazyFrame:
     """Get the dataset.
 
     Arguments:
@@ -25,7 +26,14 @@ def get_dataset(base_dataset=False):
     Returns:
         pl.LazyFrame: Porlars LazyFrame
     """
-
-    if base_dataset:
-        return pl.scan_parquet(BASE_DATASET_FULL_NAME)
     return pl.scan_parquet(DATASET_FULL_NAME)
+
+def get_tfidf_matrix() -> csr_matrix:
+    """Get the TF-IDF matrix.
+
+        Returns:
+            scipy.csr_matrix: Sparse Matrix
+        """
+
+    return load_npz(TF_IDF_MATRIX_FULL_NAME)
+

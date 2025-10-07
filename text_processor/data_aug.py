@@ -12,19 +12,12 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-from .dataset import get_dataset, get_tfidf_matrix
-from .global_variables import (
-    PROJECT_ROOT,
-    CONFIG_PATH,
-    DATASET_FULL_NAME,
-    TF_IDF_MATRIX_FULL_NAME
-)
+from utils import get_dataset, get_tfidf_matrix
 
-__all__ = [
-    'get_dataset',
-    'get_tfidf_matrix',
-    'PROJECT_ROOT',
-    'CONFIG_PATH',
-    'DATASET_FULL_NAME',
-    'TF_IDF_MATRIX_FULL_NAME'
-]
+
+def random_swap():
+    dataframe = get_dataset().collect()
+    tfidf_matrix = get_tfidf_matrix()
+
+
+random_swap()

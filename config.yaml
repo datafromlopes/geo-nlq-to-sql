@@ -1,6 +1,7 @@
 dataset:
-  base_name: base_dataset
   name: dataset
   type: parquet
   path: data
+  tf_idf_matrix_name: tf_idf_sparse_matrix
+  tf_idf_matrix_type: npz
 
